@@ -1,3 +1,10 @@
+/*
+Youtube Haiku Player 0.1
+Author: Simone Cingano (me@yupswing.it)
+Repository: https://github.com/yupswing/youtubehaiku
+Licence: MIT
+*/
+
 var Haiku = function(_player_id) {
   var player_id = _player_id;
   var player = null;

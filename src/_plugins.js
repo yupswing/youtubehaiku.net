@@ -1,5 +1,11 @@
-$(function() {
+/*
+Youtube Haiku Player 0.1
+Author: Simone Cingano (me@yupswing.it)
+Repository: https://github.com/yupswing/youtubehaiku
+Licence: MIT
+*/
 
+$(function() {
 
   // Similar to jQuery UI .highlight()
   jQuery.fn.flash = function(or_color, bg_color, duration) {
