@@ -26,6 +26,8 @@ var Haiku = function(_player_id) {
   var is_buffering = true; // the player is buffering (or starting)
   var is_ui_showing_buffering = false; // keep track if the UI is showing as buffering
 
+  var is_splash_shown = false;
+
   function init() {
 
     console.log("==================================================================================\n __   __          _         _          _   _       _ _                       _   \n \\ \\ / /__  _   _| |_ _   _| |__   ___| | | | __ _(_) | ___   _   _ __   ___| |_ \n  \\ V / _ \\| | | | __| | | | '_ \\ / _ \\ |_| |/ _` | | |/ / | | | | '_ \\ / _ \\ __|\n   | | (_) | |_| | |_| |_| | |_) |  __/  _  | (_| | |   <| |_| |_| | | |  __/ |_ \n   |_|\\___/ \\__,_|\\__|\\__,_|_.__/ \\___|_| |_|\\__,_|_|_|\\_\\\\__,_(_)_| |_|\\___|\\__|\n==================================================================================\n");
@@ -33,6 +35,7 @@ var Haiku = function(_player_id) {
     is_mobile = isMobile();
     if (is_mobile) {
       console.log('* You are using a MOBILE browser');
+      $('#shortcuts').hide(); // hide keyboard shortcuts
     } else {
       console.log('* You are using a DESKTOP browser');
     }
@@ -44,6 +47,7 @@ var Haiku = function(_player_id) {
     if (!settings.is_back) {
       console.log('* First time on youtubehaiku.net');
       setting('is_back', true);
+      splash();
     } else {
       console.log('* Welcome back to youtubehaiku.net');
     }
@@ -58,22 +62,28 @@ var Haiku = function(_player_id) {
     $(window).keydown(function(event) {
       switch (event.which) {
         case 39: // [right]
-        case 78: // P
+        case 78: // N
           next();
+          break;
+        case 37: // [left]
+        case 66: // B
+          prev();
           break;
         case 40: // [down]
         case 82: // R
           again();
           break;
-        case 37: // [left]
-          prev();
-          break;
+        case 67: // C
         case 76: // L
-          openLink();
+          openLink(); // open to video comment page
           break;
         case 32: // space
         case 80: // P
           playPause();
+          break;
+        case 190: // ?
+        case 72: // H
+          splash();
           break;
         default:
           console.log('* Thanks for pressing the random key ' + event.which);
@@ -212,6 +222,13 @@ var Haiku = function(_player_id) {
     onReady();
   }
 
+  function splash() {
+    if (is_splash_shown) return;
+    if (is_ready) pause();
+    is_splash_shown = true;
+    $('.splash').show();
+  }
+
   function onYoutubeReady() {
     console.log('+ Youtube API is loaded');
     player = new YT.Player(player_id, {
@@ -322,7 +339,7 @@ var Haiku = function(_player_id) {
     if (post.videoStart) options.startSeconds = post.videoStart;
     if (post.videoEnd) options.endSeconds = post.videoEnd;
 
-    if (is_mobile && is_first_play) {
+    if (is_splash_shown || is_mobile && is_first_play) {
       player.cueVideoById(options);
     } else {
       player.loadVideoById(options);
@@ -381,6 +398,10 @@ var Haiku = function(_player_id) {
   }
 
   function play() {
+    if (is_splash_shown) {
+      is_splash_shown = false;
+      $('.splash').hide();
+    }
     player_state = player.getPlayerState();
     if (player_state == YT.PlayerState.PAUSED || player_state == YT.PlayerState.CUED) {
       player.playVideo();
@@ -432,6 +453,7 @@ var Haiku = function(_player_id) {
     pause: pause,
     again: again,
     prev: prev,
+    splash: splash,
     onWindowBlur: onWindowBlur,
     onYoutubeReady: onYoutubeReady,
   };

@@ -67,6 +67,7 @@ gulp dist
 - [x] Settings in cookie (first time on site?)
 - [x] Stop next/prev when reach end/start
 - [x] Better console.logs (with ascii banner!)
+- [x] info splash only first time (or when press H)
 
 ## Bugfixes
 
@@ -76,19 +77,13 @@ gulp dist
 
 ## TODO
 
-- [ ] button feedback more consistent (icons all the time, flash only when user input)
-- [ ] batches by 10 videos with filters until you got at least 10 valid videos
-
-  - [ ] (keep last loaded for next batch)
-
+- [ ] batches by 25 videos per time with filters (or until you got at least 20 valid videos)
 - [ ] load more videos on the fly when the batch is 5 videos away to the end
-- [ ] (keep the playlist)
 
 - [ ] choose/change channel (reset posts)
 
   - [ ] top in categories [all/day/...]
   - [ ] order by [hot/top...]
   - [ ] only haiku/meme/poetry
-
-- [ ] waiting screen (instead of player)
-- [ ] info splash
+  
+- [ ] better splash introduction (what is haiku, poetry, meme and how youtubehaiku was born)

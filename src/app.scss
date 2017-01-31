@@ -10,6 +10,15 @@ Licence: MIT
   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+a,
+a:active,
+a:focus,
+a:hover {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -34,6 +43,60 @@ body {
   background: black;
 }
 
+.splash {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  background: rgba(0,0,0,0.5);
+  overflow-y: auto;
+
+  .box {
+    color: white;
+    border: 2px solid #999;
+    width: 80%;
+    max-width: 500px;
+    font-size: 14px;
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    margin: 50px auto;
+
+    .tube {
+      display: inline-block;
+      padding: 2px;
+      background: #e52d27;
+      border-radius: 10px;
+    }
+
+    h1 {
+      display: block;
+      margin: 0;
+      font-size: 30px;
+      text-align: center;
+    }
+
+    p {
+      // text-align: justify;
+    }
+
+    .button {
+      display: block;
+      text-decoration: none;
+      width: 100px;
+      border-bottom:3px solid #b31217;
+      text-shadow: 0 0 5px #b31217;
+      text-align: center;
+      font-size: 18px;
+      cursor: pointer;
+      background: #e52d27;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin: 0 auto;
+    }
+  }
+}
+
 .logo {
   display: block;
   text-decoration: none;
@@ -53,7 +116,7 @@ body {
   position: absolute;
   bottom: 0;
   background: transparent;
-  height: 3px;
+  height: 4px;
   width: 100%;
   z-index: 200;
   text-align: right;
@@ -61,7 +124,7 @@ body {
   overflow: hidden;
 
   .loadingbar {
-    height: 3px;
+    height: 4px;
     display: inline-block;
     background: #f42323;
     background-image: linear-gradient(to bottom, #b31217, #e52d27);
@@ -104,7 +167,7 @@ body {
   background: #222;
   width: 100%;
   bottom: 0;
-  border-top: 1px solid #999;
+  border-top: 2px solid #444;
 
   .current {
     color: #fff;
@@ -120,7 +183,7 @@ body {
     position: absolute;
     z-index: 100;
     right: 10px;
-    bottom: 50px;
+    bottom: 51px;
     text-align: right;
     width: 45%;
     overflow: hidden;
@@ -134,7 +197,9 @@ body {
       width: 20px;
       height: 20px;
       margin: 0 0 0 10px;
-      border: 1px solid #999;
+      border-bottom:1px solid #000;
+      text-shadow: 0 0 3px #000;
+      // border: 1px solid #999;
       color: #aaa;
       background-color: #353535;
       font-size: 18px;
@@ -145,7 +210,7 @@ body {
       i {
         display: inline-block;
         position: absolute;
-        top: 6px;
+        top: 7px;
         right: 0;
         left: 0;
       }
@@ -228,4 +293,34 @@ body {
       color: #333;
     }
   }
+}
+/* KBD style from https://github.com/michaelhue/keyscss */
+kbd {
+  display: inline;
+  display: inline-block;
+  min-width: 1em;
+  padding: 0.2em 0.3em;
+  font: normal 0.85em/1 "Lucida Grande", Lucida, Arial, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  -moz-border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
+  border-radius: 0.3em;
+  border: none;
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background: rgb(250, 250, 250);
+  background: -moz-linear-gradient(top, rgb(210, 210, 210), rgb(255, 255, 255));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(210, 210, 210)), to(rgb(255, 255, 255)));
+  color: rgb(50, 50, 50);
+  text-shadow: 0 0 2px rgb(255, 255, 255);
+  -moz-box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 0.4em rgb(200, 200, 200), 0 0.1em 0 rgb(130, 130, 130), 0 0.11em 0 rgba(0, 0, 0, .4), 0 0.1em 0.11em rgba(0, 0, 0, .9);
+  -webkit-box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 0.4em rgb(200, 200, 200), 0 0.1em 0 rgb(130, 130, 130), 0 0.11em 0 rgba(0, 0, 0, .4), 0 0.1em 0.11em rgba(0, 0, 0, .9);
+  box-shadow: inset 0 0 1px rgb(255, 255, 255), inset 0 0 0.4em rgb(200, 200, 200), 0 0.1em 0 rgb(130, 130, 130), 0 0.11em 0 rgba(0, 0, 0, .4), 0 0.1em 0.11em rgba(0, 0, 0, .9);
+}
+
+kbd[title] {
+  cursor: help;
 }
