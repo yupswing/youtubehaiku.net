@@ -1,9 +1,14 @@
 /*
 Youtube Haiku Player 0.1
 Author: Simone Cingano (me@yupswing.it)
-Repository: https://github.com/yupswing/youtubehaiku
+Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 */
+* {
+  // avoid a without href to be highlighted when clicked on mobile
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 body {
   margin: 0;
@@ -21,7 +26,7 @@ body {
 }
 
 .overlay {
-  display:none;
+  display: none;
   position: absolute;
   width: 100%;
   height: calc(100vh - 72px);
@@ -37,6 +42,7 @@ body {
   left: 10px;
   z-index: 100;
   color: white;
+  cursor: pointer;
   font-size: 25px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -46,8 +52,8 @@ body {
 .loadingbar_block {
   position: absolute;
   bottom: 0;
-  background: #000;
-  height: 2px;
+  background: transparent;
+  height: 3px;
   width: 100%;
   z-index: 200;
   text-align: right;
@@ -55,10 +61,40 @@ body {
   overflow: hidden;
 
   .loadingbar {
-    height: 2px;
+    height: 3px;
     display: inline-block;
-    background: red;
-    transition: width 0.2s ease;
+    background: #f42323;
+    background-image: linear-gradient(to bottom, #b31217, #e52d27);
+    transition: width 0.1s ease;
+
+    &.buffering:after {
+      animation: move 2s linear infinite;
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-image: linear-gradient( -45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
+      z-index: 100;
+      background-size: 20px 20px;
+      animation: move 2s linear infinite;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      overflow: hidden;
+    }
+  }
+}
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 20px 20px;
   }
 }
 
@@ -67,7 +103,7 @@ body {
   height: 69px;
   background: #222;
   width: 100%;
-  bottom: 2px;
+  bottom: 0;
   border-top: 1px solid #999;
 
   .current {
@@ -94,6 +130,7 @@ body {
       border-radius: 100px;
       padding: 5px;
       text-align: center;
+      text-decoration: none;
       width: 20px;
       height: 20px;
       margin: 0 0 0 10px;
@@ -103,6 +140,7 @@ body {
       font-size: 18px;
       cursor: pointer;
       position: relative;
+      transition: color 0.5s ease;
 
       i {
         display: inline-block;
@@ -110,6 +148,10 @@ body {
         top: 6px;
         right: 0;
         left: 0;
+      }
+
+      &:hover {
+        color: white;
       }
     }
   }
@@ -142,9 +184,9 @@ body {
 
 #title {
   color: #fff;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
 }
 @media screen and (max-width: 600px) {
   .bar {

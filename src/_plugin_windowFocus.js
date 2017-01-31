@@ -1,24 +1,4 @@
-/*
-Youtube Haiku Player 0.1
-Author: Simone Cingano (me@yupswing.it)
-Repository: https://github.com/yupswing/youtubehaiku
-Licence: MIT
-*/
-
 $(function() {
-
-  // Similar to jQuery UI .highlight()
-  jQuery.fn.flash = function(or_color, bg_color, duration) {
-    var element = this;
-    var bg_current = or_color || element.css('backgroundColor');
-    element.stop(true).animate({
-      'backgroundColor': 'rgb(' + bg_color + ')'
-    }, duration / 2, function() {
-      element.stop(true).animate({
-        'backgroundColor': 'rgb(' + bg_current + ')'
-      }, duration / 2);
-    });
-  };
 
   // Handle page visibility
   var hidden = "hidden";
@@ -57,7 +37,6 @@ $(function() {
     else
       status = this[hidden] ? "hidden" : "visible";
     window.isWindowFocused = status == 'visible';
-    console.log(status, window.onWindowBlur);
     if (status == 'hidden' && window.onWindowBlur) window.onWindowBlur();
     if (status == 'visible' && window.onWindowFocus) window.onWindowFocus();
   }

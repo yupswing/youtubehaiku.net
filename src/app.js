@@ -1,7 +1,7 @@
 /*
 Youtube Haiku Player 0.1
 Author: Simone Cingano (me@yupswing.it)
-Repository: https://github.com/yupswing/youtubehaiku
+Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 */
 
@@ -11,6 +11,6 @@ var onWindowBlur = null;
 $(function() {
   haiku = new Haiku('youtube');
   onYouTubeIframeAPIReady = haiku.onYoutubeReady;
-  onWindowBlur = haiku.onBlur;
+  onWindowBlur = haiku.onWindowBlur;
   haiku.init();
 });

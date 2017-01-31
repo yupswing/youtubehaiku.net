@@ -1,7 +1,7 @@
 <!--
 Youtube Haiku Player 0.1
 Author: Simone Cingano (me@yupswing.it)
-Repository: https://github.com/yupswing/youtubehaiku
+Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 -->
 <!doctype html>
@@ -11,6 +11,7 @@ Licence: MIT
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Youtube Haiku</title>
+    <meta name="mobile-web-app-capable" content="yes">
     <!-- build:app_css app.css -->
     <link rel="stylesheet" type="text/css" href="app.css">
     <!-- endbuild -->
@@ -22,19 +23,19 @@ Licence: MIT
     <div class="player">
       <div id="youtube"></div>
     </div>
-    <a class="logo" href="http://www.reddit.com/r/youtubehaiku" target="_blank">
+    <a class="logo" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
       <i class="fa fa-youtube-play" aria-hidden="true" style="color:#e52d27;"></i>
       俳句
     </a>
     <div class="loadingbar_block">
-      <div class="loadingbar"></div>
+      <div class="loadingbar buffering"></div>
     </div>
     <div class="bar">
       <div class="current">
         <div class="title">
           <span class="tags" id="tags"></span>
           <br>
-          <span id="title" onclick="haiku.openLink()"></span>
+          <a id="title" onclick="haiku.openLink()"></a>
         </div>
       </div>
       <div class="next">
@@ -47,29 +48,30 @@ Licence: MIT
         </div>
       </div>
       <div class="buttons">
-        <div class="button" style="display:none;">
+        <a class="button" style="display:none;">
           <i class="fa fa-television" aria-hidden="true"></i>
-        </div>
-        <div class="button" onclick="haiku.prev()" id="button_prev">
+        </a>
+        <a class="button" onclick="haiku.openLink()">
+          <i class="fa fa-reddit-alien" aria-hidden="true"></i>
+        </a>
+        <a id="button_prev" class="button" onclick="haiku.prev()">
           <i class="fa fa-fast-backward" aria-hidden="true"></i>
-        </div>
-        <div class="button" onclick="haiku.playPause()" id="button_play">
+        </a>
+        <a id="button_play" class="button" onclick="haiku.playPause()">
           <i class="fa fa-play" id="play" aria-hidden="true"></i>
-        </div>
-        <div class="button" onclick="haiku.again()" id="button_again">
+        </a>
+        <a id="button_again" class="button" onclick="haiku.again()">
           <i class="fa fa-repeat" aria-hidden="true"></i>
-        </div>
-        <div class="button" onclick="haiku.next()" id="button_next">
+        </a>
+        <a id="button_next" class="button" onclick="haiku.next()">
           <i class="fa fa-fast-forward" aria-hidden="true"></i>
-        </div>
-        <div class="button" style="display:none;">
-          <i class="fa fa-link" aria-hidden="true"></i>
-        </div>
+        </a>
       </div>
     </div>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
     <!-- build:app_js app.js -->
     <script type="text/javascript" src="app.js"></script>
     <!-- endbuild -->
