@@ -339,7 +339,7 @@ var Haiku = function(_player_id) {
     if (post.videoStart) options.startSeconds = post.videoStart;
     if (post.videoEnd) options.endSeconds = post.videoEnd;
 
-    if (is_splash_shown || is_mobile && is_first_play) {
+    if (is_splash_shown || (is_mobile && is_first_play)) {
       player.cueVideoById(options);
     } else {
       player.loadVideoById(options);
