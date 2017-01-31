@@ -1,0 +1,182 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: black;
+  font-family: Lato, sans-serif;
+}
+
+.player {
+  margin: 0;
+  width: 100%;
+  height: calc(100vh - 72px);
+  z-index: 0;
+}
+
+.overlay {
+  display:none;
+  position: absolute;
+  width: 100%;
+  height: calc(100vh - 72px);
+  z-index: 1;
+  background: black;
+}
+
+.logo {
+  display: block;
+  text-decoration: none;
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  z-index: 100;
+  color: white;
+  font-size: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.loadingbar_block {
+  position: absolute;
+  bottom: 0;
+  background: #000;
+  height: 2px;
+  width: 100%;
+  z-index: 200;
+  text-align: right;
+  font-size: 0;
+  overflow: hidden;
+
+  .loadingbar {
+    height: 2px;
+    display: inline-block;
+    background: red;
+    transition: width 0.2s ease;
+  }
+}
+
+.bar {
+  position: absolute;
+  height: 69px;
+  background: #222;
+  width: 100%;
+  bottom: 2px;
+  border-top: 1px solid #999;
+
+  .current {
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
+    width: 45%;
+    overflow: hidden;
+  }
+
+  .buttons {
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 50px;
+    text-align: right;
+    width: 45%;
+    overflow: hidden;
+
+    .button {
+      display: inline-block;
+      border-radius: 100px;
+      padding: 5px;
+      text-align: center;
+      width: 20px;
+      height: 20px;
+      margin: 0 0 0 10px;
+      border: 1px solid #999;
+      color: #aaa;
+      background-color: #353535;
+      font-size: 18px;
+      cursor: pointer;
+      position: relative;
+
+      i {
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        right: 0;
+        left: 0;
+      }
+    }
+  }
+
+  .next {
+    color: #aaa;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 45%;
+    overflow: hidden;
+
+    .thumbnail {
+      background: #fff;
+      margin-right: 10px;
+      height: 70px;
+      width: 93px;
+      float: left;
+    }
+  }
+}
+
+.title {
+  width: 100%;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#title {
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+}
+@media screen and (max-width: 600px) {
+  .bar {
+    .next {
+      display: none;
+    }
+
+    .buttons,
+    .current {
+      width: 90%;
+    }
+  }
+}
+
+.tags {
+  span {
+    border: 1px solid #eee;
+    font-weight: bold;
+    color: #ccc;
+    font-size: 8px;
+    display: inline-block;
+    padding: 1px 3px;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    background: #333;
+
+    &.haiku {
+      background-color: #191CC1;
+      color: white;
+    }
+
+    &.meme {
+      background-color: #CC1818;
+      color: white;
+    }
+
+    &.poetry {
+      background-color: #EAD00E;
+      color: #333;
+    }
+  }
+}

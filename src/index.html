@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YoutubeHaiku.net</title>
+    <!-- build:app_css app.css -->
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <!-- endbuild -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="overlay"></div>
+    <div class="player">
+      <div id="youtube"></div>
+    </div>
+    <a class="logo" href="http://www.reddit.com/r/youtubehaiku" target="_blank">
+      <i class="fa fa-youtube-play" aria-hidden="true" style="color:#e52d27;"></i>
+      俳句
+    </a>
+    <div class="loadingbar_block">
+      <div class="loadingbar"></div>
+    </div>
+    <div class="bar">
+      <div class="current">
+        <div class="title">
+          <span class="tags" id="tags"></span>
+          <br>
+          <span id="title" onclick="haiku.openLink()"></span>
+        </div>
+      </div>
+      <div class="next">
+        <div class="title">
+          <img src="" class="thumbnail" id="next_thumbnail" style="">
+          <strong>Coming up:</strong><br>
+          <span class="tags" id="next_tags"></span>
+          <br>
+          <span id="next_title"></span>
+        </div>
+      </div>
+      <div class="buttons">
+        <div class="button" style="display:none;">
+          <i class="fa fa-television" aria-hidden="true"></i>
+        </div>
+        <div class="button" onclick="haiku.prev()" id="button_prev">
+          <i class="fa fa-fast-backward" aria-hidden="true"></i>
+        </div>
+        <div class="button" onclick="haiku.playPause()" id="button_play">
+          <i class="fa fa-play" id="play" aria-hidden="true"></i>
+        </div>
+        <div class="button" onclick="haiku.again()" id="button_again">
+          <i class="fa fa-repeat" aria-hidden="true"></i>
+        </div>
+        <div class="button" onclick="haiku.next()" id="button_next">
+          <i class="fa fa-fast-forward" aria-hidden="true"></i>
+        </div>
+        <div class="button" style="display:none;">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+    <!-- build:app_js app.js -->
+    <script type="text/javascript" src="app.js"></script>
+    <!-- endbuild -->
+
+  </body>
+
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "youtubehaiku",
+  "description": "Youtube Haiku HTML5 Player",
+  "version": "1.0.0",
+  "private": false,
+  "license": "MIT",
+  "author": {
+    "name": "Simone Cingano",
+    "email": "me@simonecingano.it"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "del": "2.x",
+    "gulp": "3.x",
+    "gulp-clean-css": "2.x",
+    "gulp-concat": "2.x",
+    "gulp-connect": "5.x",
+    "gulp-htmlmin": "3.x",
+    "gulp-rename": "1.x",
+    "gulp-replace": "0.x",
+    "gulp-rev": "7.x",
+    "gulp-sass": "2.x",
+    "gulp-uglify": "2.x",
+    "gulp-usemin": "0.x",
+    "gulp-watch": "4.x",
+    "run-sequence": "1.x"
+  }
+}
