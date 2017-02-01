@@ -85,20 +85,21 @@ body {
         text-decoration: none;
         font-size: 18px;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 8px;
         margin: 10px;
         background: #eee;
         border: 1px solid #ccc;
 
-        span {
+        > span {
           display: inline-block;
-          border-radius: 5px;
+          border-radius: 8px;
           padding: 3px;
           width: 30px;
           text-align: center;
           background: #e52d27;
           border-bottom: 3px solid #b31217;
           float: left;
+          color: #eee;
           text-shadow: 0 0 5px #b31217;
 
           &.back {
@@ -120,7 +121,7 @@ body {
           }
         }
 
-        label {
+        > label {
           cursor: pointer;
           font-size: 13px;
           color: #333;
@@ -147,6 +148,10 @@ body {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 5px 10px;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .loadingbar_block {
@@ -303,32 +308,55 @@ body {
   }
 }
 
-.tags {
-  span {
-    border: 1px solid #eee;
-    font-weight: bold;
-    color: #ccc;
+.tag {
+  border: 1px solid #eee;
+  font-weight: bold;
+  color: #ccc;
+  display: inline-block;
+  padding: 1px 3px;
+  border-radius: 5px;
+  background: #333;
+  text-transform: uppercase;
+
+  &.small {
     font-size: 8px;
-    display: inline-block;
-    padding: 1px 3px;
-    border-radius: 5px;
     margin-bottom: 2px;
-    background: #333;
+  }
+}
 
-    &.haiku {
-      background-color: #191CC1;
-      color: white;
-    }
+.bg_other {
+  background: #333 !important;
+  color: #eee;
 
-    &.meme {
-      background-color: #CC1818;
-      color: white;
-    }
+  label {
+    color: #eee;
+  }
+}
 
-    &.poetry {
-      background-color: #EAD00E;
-      color: #333;
-    }
+.bg_haiku {
+  background-color: #191CC1 !important; // original #191CC1
+  color: #eee;
+
+  label {
+    color: #eee;
+  }
+}
+
+.bg_meme {
+  background-color: #A10000 !important; // original #A10000
+  color: #eee;
+
+  label {
+    color: #eee;
+  }
+}
+
+.bg_poetry {
+  background-color: #EAD00E !important; // original #EAD00E
+  color: #333;
+
+  label {
+    color: #333;
   }
 }
 /* KBD style from https://github.com/michaelhue/keyscss */

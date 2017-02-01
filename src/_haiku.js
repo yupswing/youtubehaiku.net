@@ -111,7 +111,7 @@ var Haiku = function(_player_id) {
   }
 
   function onWindowBlur() {
-    console.log('* The window lost is focus');
+    console.log('* The window lost its focus');
     pause();
   }
 
@@ -173,12 +173,7 @@ var Haiku = function(_player_id) {
   }
 
   function renderChannel() {
-    $('#channel-new-').removeClass('success');
-    $('#channel-top-all').removeClass('success');
-    $('#channel-top-year').removeClass('success');
-    $('#channel-top-month').removeClass('success');
-    $('#channel-top-week').removeClass('success');
-    $('#channel-top-day').removeClass('success');
+    $('.channel').removeClass('success');
     $('#channel-'+settings.channel.category+'-'+settings.channel.timeframe).addClass('success');
   }
 
@@ -446,7 +441,7 @@ var Haiku = function(_player_id) {
     if (!tags) return '';
     for (var index in tags) {
       tag = tags[index];
-      output += ' <span class="' + tag + '">' + tag.toUpperCase() + '</span>';
+      output += ' <span class="tag small bg_' + tag + '">' + tag.toUpperCase() + '</span>';
     }
     return output;
   }
