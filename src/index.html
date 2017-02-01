@@ -189,13 +189,14 @@ Licence: MIT
           <a style="font-weight:bold;" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
             <i class="fa fa-reddit-alien"></i>
             r/youtubehaiku</a>
-          in a nice modern player that will make you waste even more time than usual.</p>
+          in a beautiful<small>[citation needed]</small>
+          modern player that will make you waste even more time than usual.</p>
         <p style="text-align:justify;">
           You just need to know that
           <span class="tag bg_haiku">HAIKU</span>
           are poetic videos under 14 seconds,
           <span class="tag bg_poetry">POETRY</span>
-          are still poetic but longer (up to 30 seconds) and then, you know, there are
+          are still poetic but longer (under 30 seconds) and then, you know, there are
           <span class="tag bg_meme">Memes</span>.</p>
         <p style="font-size:110%;text-align:center;">youtubehaiku.net is made by
           <a href="http://simonecingano.it" style="font-weight:bold;" target="_blank">Simone Cingano</a>
@@ -215,166 +216,162 @@ Licence: MIT
             </span>
           </a>
         </div>
-        <p style="text-align:center;">
-          Videos will play continuosly until the end of the internet.<sup>
-            <i>
-              <small>[citation needed]</small>
-            </i>
-          </sup>
-        </p>
-        <div>
-          <p>Control the player with the buttons<span class="no_mobile">
-              or use the keyboard shortcuts</span>:</p>
-          <ul>
-            <li>
-              <i class="shortcut fa fa-list-ul"></i>
-              <span class="no_mobile">
-                or
-                <kbd>S</kbd>
-                or
-                <kbd>.</kbd>
-              </span>
-            </span>
-            to open the channel selection</li>
-          <li>
-            <i class="shortcut fa fa-reddit-alien"></i>
-            <span class="no_mobile">
-              or
-              <kbd>C</kbd>
-              or
-              <kbd>L</kbd>
-            </span>
-            to open the reddit post</li>
-          <li>
-            <i class="shortcut fa fa-fast-forward"></i>
-            <span class="no_mobile">
-              or
-              <kbd>→</kbd>
-              or
-              <kbd>N</kbd>
-            </span>
-            to skip to the next video</li>
-          <li>
-            <i class="shortcut fa fa-play"></i>
-            <span class="no_mobile">
-              or
-              <kbd>P</kbd>
-              or
-              <kbd>SPACE</kbd>
-            </span>
-            to play/pause</li>
-          <li>
-            <i class="shortcut fa fa-repeat"></i>
-            <span class="no_mobile">
-              or
-              <kbd>R</kbd>
-            </span>
-            to replay the current video</li>
-          <li>
-            <i class="shortcut fa fa-fast-backward"></i>
-            <span class="no_mobile">
-              or
-              <kbd>←</kbd>
-              or
-              <kbd>B</kbd>
-            </span>
-            to go back to the previous video</li>
-          <li>
-            <i class="shortcut fa fa-question"></i>
-            <span class="no_mobile">
-              or
-              <kbd>H</kbd>
-              or
-              <kbd>.</kbd>
-            </span>
-            to show this help box again</li>
-        </ul>
-
+        <p style="font-size:110%;text-align:center;">
+          If you have comments or ideas
+          <a href="mailto:me@yupswing.it" target="_blank">contact me</a>.
+        </sup>
+      </p>
+      <hr>
+      <p>Control the player with the buttons<span class="no_mobile">
+          or use the keyboard shortcuts</span>:</p>
+      <ul>
+        <li>
+          <i class="shortcut fa fa-list-ul"></i>
+          <span class="no_mobile">
+            or
+            <kbd>S</kbd>
+            or
+            <kbd>.</kbd>
+          </span>
+        </span>
+        to open the channel selection</li>
+      <li>
+        <i class="shortcut fa fa-reddit-alien"></i>
+        <span class="no_mobile">
+          or
+          <kbd>C</kbd>
+          or
+          <kbd>L</kbd>
+        </span>
+        to open the reddit post</li>
+      <li>
+        <i class="shortcut fa fa-fast-forward"></i>
+        <span class="no_mobile">
+          or
+          <kbd>→</kbd>
+          or
+          <kbd>N</kbd>
+        </span>
+        to skip to the next video</li>
+      <li>
+        <i class="shortcut fa fa-play"></i>
+        <span class="no_mobile">
+          or
+          <kbd>P</kbd>
+          or
+          <kbd>SPACE</kbd>
+        </span>
+        to play/pause</li>
+      <li>
+        <i class="shortcut fa fa-repeat"></i>
+        <span class="no_mobile">
+          or
+          <kbd>R</kbd>
+        </span>
+        to replay the current video</li>
+      <li>
+        <i class="shortcut fa fa-fast-backward"></i>
+        <span class="no_mobile">
+          or
+          <kbd>←</kbd>
+          or
+          <kbd>B</kbd>
+        </span>
+        to go back to the previous video</li>
+      <li>
+        <i class="shortcut fa fa-question"></i>
+        <span class="no_mobile">
+          or
+          <kbd>H</kbd>
+          or
+          <kbd>.</kbd>
+        </span>
+        to show this help box again</li>
+    </ul>
+  </div>
+</div>
+<div class="player">
+  <div id="youtube"></div>
+</div>
+<a class="logo" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
+  <img src="">
+</a>
+<div class="loadingbar_block">
+  <div class="loadingbar buffering"></div>
+</div>
+<div class="bar">
+  <div class="current">
+    <a class="title" onclick="haiku.openLink()">
+      <div id="title"></div>
+      <div class="info">
+        <span id="author"></span>
+        <span>&nbsp;|&nbsp;</span>
+        <i class="fa fa-arrow-up"></i>
+        <span id="score"></span>
+        <span>&nbsp;|&nbsp;</span>
+        <span class="tags" id="tags"></span>
       </div>
-    </div>
+    </a>
   </div>
-  <div class="player">
-    <div id="youtube"></div>
+  <div class="next">
+    <a class="title" onclick="haiku.next()">
+      <div class="info"><img src="" class="thumbnail" id="next_thumbnail" style="">
+        <strong>Coming up:</strong><br>
+        <span class="tags" id="next_tags"></span>
+      </div>
+      <div id="next_title"></div>
+    </a>
   </div>
-  <a class="logo" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
-    <img src="">
-  </a>
-  <div class="loadingbar_block">
-    <div class="loadingbar buffering"></div>
+  <div class="buttons">
+    <a class="button" onclick="haiku.splash()">
+      <i class="fa fa-question" aria-hidden="true"></i>
+    </a>
+    <a class="button" onclick="haiku.channels()">
+      <i class="fa fa-list-ul" aria-hidden="true"></i>
+    </a>
+    <a class="button" onclick="haiku.openLink()">
+      <i class="fa fa-reddit-alien" aria-hidden="true"></i>
+    </a>
+    <a id="button_prev" class="button" onclick="haiku.prev()">
+      <i class="fa fa-fast-backward" aria-hidden="true"></i>
+    </a>
+    <a id="button_play" class="button" onclick="haiku.playPause()">
+      <i class="fa fa-play" id="play" aria-hidden="true"></i>
+    </a>
+    <a id="button_again" class="button" onclick="haiku.again()">
+      <i class="fa fa-repeat" aria-hidden="true"></i>
+    </a>
+    <a id="button_next" class="button" onclick="haiku.next()">
+      <i class="fa fa-fast-forward" aria-hidden="true"></i>
+    </a>
   </div>
-  <div class="bar">
-    <div class="current">
-      <a class="title" onclick="haiku.openLink()">
-        <div id="title"></div>
-        <div class="info">
-          <span id="author"></span>
-          <span>&nbsp;|&nbsp;</span>
-          <i class="fa fa-arrow-up"></i>
-          <span id="score"></span>
-          <span>&nbsp;|&nbsp;</span>
-          <span class="tags" id="tags"></span>
-        </div>
-      </a>
-    </div>
-    <div class="next">
-      <a class="title" onclick="haiku.next()">
-        <div class="info"><img src="" class="thumbnail" id="next_thumbnail" style="">
-          <strong>Coming up:</strong><br>
-          <span class="tags" id="next_tags"></span>
-        </div>
-        <div id="next_title"></div>
-      </a>
-    </div>
-    <div class="buttons">
-      <a class="button" onclick="haiku.splash()">
-        <i class="fa fa-question" aria-hidden="true"></i>
-      </a>
-      <a class="button" onclick="haiku.channels()">
-        <i class="fa fa-list-ul" aria-hidden="true"></i>
-      </a>
-      <a class="button" onclick="haiku.openLink()">
-        <i class="fa fa-reddit-alien" aria-hidden="true"></i>
-      </a>
-      <a id="button_prev" class="button" onclick="haiku.prev()">
-        <i class="fa fa-fast-backward" aria-hidden="true"></i>
-      </a>
-      <a id="button_play" class="button" onclick="haiku.playPause()">
-        <i class="fa fa-play" id="play" aria-hidden="true"></i>
-      </a>
-      <a id="button_again" class="button" onclick="haiku.again()">
-        <i class="fa fa-repeat" aria-hidden="true"></i>
-      </a>
-      <a id="button_next" class="button" onclick="haiku.next()">
-        <i class="fa fa-fast-forward" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
+</div>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
-  <!-- build:app_js app.js -->
-  <script type="text/javascript" src="app.js"></script>
-  <!-- endbuild -->
-  <!-- Here's google analytics tracking kbd
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
+<!-- build:app_js app.js -->
+<script type="text/javascript" src="app.js"></script>
+<!-- endbuild -->
+<!-- Here's google analytics tracking kbd
          IF YOU ARE FORKING PLEASE REMOVE OR SUBSTITUTE THE kbd WITH YOUR OWN :)
     -->
-  <script>
-    (function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-      },
-      i[r].l = 1 * new Date();
-      a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-91208281-1', 'auto');
-    ga('send', 'pageview');
-  </script>
+<script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    },
+    i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-91208281-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 </body>
 
