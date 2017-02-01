@@ -290,10 +290,8 @@ body {
 .title {
   width: 100%;
   font-size: 14px;
-  white-space: nowrap;
   overflow: hidden;
   text-decoration: none;
-  text-overflow: ellipsis;
 
   .info {
     color: #ccc;
@@ -319,6 +317,11 @@ a.title:not(.no-hover):hover {
   text-decoration: none;
   cursor: pointer;
   font-size: 18px;
+}
+#title, #next_title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 @media screen and (max-width: 600px) {
   .bar {
