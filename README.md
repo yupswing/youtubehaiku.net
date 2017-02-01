@@ -82,6 +82,8 @@ gulp dist
   - [x] load more videos on the fly when the batch is 10 videos away to the end
   - [x] start playing when you have 3 valid videos
   
+- [x] favicon
+
 ## Improvements
 
 - [x] keyboard shortcuts with UI button (hide only keys on mobile, not the buttons)
@@ -98,8 +100,6 @@ gulp dist
 - [ ] review README.md
 - [ ] better splash introduction (what is haiku, poetry, meme and how youtubehaiku was born)
 
-- [ ] favicon
-
-- [ ] DEPLOY: try to load as much as possible from git
+- [] DEPLOY: try to load as much as possible from git
 
 - [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)

@@ -173,7 +173,6 @@ var Haiku = function(_player_id) {
       settings.no_tags.push(tag);
     }
     renderTags();
-    //#TODO remove post with tags from playlist
     setting('no_tags', settings.no_tags);
   }
 
@@ -249,8 +248,6 @@ var Haiku = function(_player_id) {
     });
   }
 
-  // var checkvideos = []; //#TODO remove all checkvideos
-
   function loadReddit(start_over) {
     if (!start_over) {
       if (is_channel_finished) {
@@ -317,9 +314,9 @@ var Haiku = function(_player_id) {
       // console.log(response);
       retrived_count = response.data.children.length;
       kept_count = 0;
-      console.error('after ' + response.data.after);
+      // console.error('after ' + response.data.after);
       last_retrived_post = response.data.after || null;
-      console.log('Retrived: ' + retrived_count);
+      // console.log('Retrived: ' + retrived_count);
       for (var index in response.data.children) {
 
         // console.log(response.data.children[index]);
@@ -387,11 +384,6 @@ var Haiku = function(_player_id) {
         }
         if (to_be_excluded) continue;
 
-        // if (checkvideos.indexOf(post.id) > -1) {
-        //   console.error('VIDEO ALREADY PRESENT ' + post.id);
-        // }
-        // checkvideos.push(post.id);
-
         // Create our player post from the parsed data
         data = {
           id: post.id,
@@ -408,7 +400,7 @@ var Haiku = function(_player_id) {
         // console.log(data);
         posts.push(data);
         kept_count++;
-        if (!is_reddit_ready && posts.length > POSTS_CACHE_PLAY) {
+        if (!is_reddit_ready && (posts.length >= POSTS_CACHE_PLAY || last_retrived_post === null)) {
           // reddit is ready when we have at least two valid posts
           console.log('+ Reddit is ready');
           // console.log(posts);
@@ -417,8 +409,8 @@ var Haiku = function(_player_id) {
         }
       }
 
-      console.log('Kept: ' + kept_count);
-      console.log('Total: ' + posts.length + ' | Playlist: ' + (posts.length - (current + 1)));
+      // console.log('Kept: ' + kept_count);
+      // console.log('Total: ' + posts.length + ' | Playlist: ' + (posts.length - (current + 1)));
 
       if (last_retrived_post === null) {
         // no more posts
@@ -477,7 +469,7 @@ var Haiku = function(_player_id) {
   function onYoutubePlayerReady() {
     console.log('+ Youtube Player is ready');
     is_youtube_ready = true;
-    player.mute(); //#DEPLY comment
+    // player.mute(); //#DEPLY comment
     onReady();
   }
 
@@ -572,11 +564,10 @@ var Haiku = function(_player_id) {
     var post = posts[current];
     var next = posts[current + 1];
 
-    console.log(posts.length - (current + 1));
     if ((posts.length - (current + 1) <= POSTS_CACHE_TRIGGER)) {
       // trigger loading next batch
       // (if already queued will do nothing)
-      console.log('Trigger reload');
+      console.log('* Trigger load more posts');
       loadReddit();
     }
 

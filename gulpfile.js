@@ -39,6 +39,7 @@ var CONFIG = {
 var PATHS = {
   watch: 'src/**/*.*',
   src: {
+    assets: 'assets/include/**/*',
     index: 'src/index.html',
     sass: 'src/app.scss',
     scripts: 'src/**/*.js',
@@ -88,7 +89,9 @@ gulp.task('index', function(done) {
 // Compile SASS into a file
 gulp.task('sass', function(done) {
   gulp.src([PATHS.src.sass])
-    .pipe(sass({errLogToConsole: true}))
+    .pipe(sass({
+      errLogToConsole: true
+    }))
     .pipe(gulp.dest(PATHS.tmp.dir))
     .on('end', done);
 });
@@ -107,7 +110,7 @@ gulp.task('scripts', function(done) {
    Compile everything and pack it in dist/ */
 
 gulp.task('dist', function(done) {
-  runSequence('build', 'dist_clean', 'dist_compile', done);
+  runSequence('build', 'dist_clean', ['dist_assets', 'dist_compile'], done);
 });
 
 // Clean dist directory
@@ -115,6 +118,12 @@ gulp.task('dist_clean', function(callback) {
   return del([PATHS.dist + "**/*"], {
     force: true
   }, callback);
+});
+
+// Copy included assets
+gulp.task('dist_assets', function(callback) {
+  return gulp.src(PATHS.src.assets)
+    .pipe(gulp.dest(PATHS.dist))
 });
 
 // Pack and move the <!-- builds --> in index.html
