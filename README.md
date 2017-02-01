@@ -94,6 +94,7 @@ gulp dist
 - [x] Fix sudden end of video in loaded video
 - [x] Playback from mobile cannot start automatically
 - [x] Sanitize strings
+- [x] Remove hover effects on mobile to avoid "stay hover" after a touch
 
 ## TODO
 

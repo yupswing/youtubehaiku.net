@@ -11,9 +11,9 @@ Licence: MIT
 }
 
 a,
-a:active,
-a:focus,
-a:hover {
+a:not(.no-hover):active,
+a:not(.no-hover):focus,
+a:not(.no-hover):hover {
   color: white;
   text-decoration: underline;
   cursor: pointer;
@@ -152,7 +152,7 @@ body {
   opacity: 0.9;
   transition: all 0.5s ease;
 
-  &:hover {
+  &:not(.no-hover):hover {
     background-color: rgba(0, 0, 0, 0.6);
     text-decoration: none;
     opacity: 1;
@@ -269,7 +269,7 @@ body {
         left: 0;
       }
 
-      &:hover {
+      &:not(.no-hover):hover {
         color: white;
       }
     }
@@ -312,7 +312,7 @@ body {
   }
 }
 
-a.title:hover {
+a.title:not(.no-hover):hover {
   text-decoration: none !important;
 
   #title {

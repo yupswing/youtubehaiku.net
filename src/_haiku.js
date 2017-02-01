@@ -73,6 +73,7 @@ var Haiku = function(_player_id) {
     if (is_mobile) {
       console.log('* You are using a MOBILE browser');
       $('.no_mobile').hide(); // hide keyboard shortcuts
+      $('[onclick]').addClass('no-hover'); // remove hover effects (usually remaining after a touch)
     } else {
       console.log('* You are using a DESKTOP browser');
     }
