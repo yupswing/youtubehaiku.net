@@ -7,6 +7,9 @@ Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 ```
 
+**NOTE: Thanks for checking out the source code :)
+If you plan to fork the project I'll advise you to wait a few days (today is the 1st of February) because the code is going to be optimised soon.**
+
 # YOUTUBEHAIKU.NET
 
 Youtube Haiku Player is an HTML5 web application to play, continuosly, videos gathered from the Youtube Haiku subreddit ([/r/youtubehaiku](https://www.reddit.com/r/youtubehaiku)) in a nice and minimalist interface.
@@ -15,15 +18,15 @@ The app is live at <http://youtubehaiku.net>
 
 You can choose the source of the videos (top posts, new posts...), the range (today, this week, all time...) and the tags you want to exclude (haiku, poetry, meme, nsfw).
 
-The video list is updated while you watch (or when you change the "channel") and will play forever until the end of the reddit (and trust me, there are a lot of videos to watch).
+The video list is updated while you watch (or when you change the "channel") and will play forever until the end of the reddit (which is at max 1000 posts by reddit design)
 
-Every video shown is easily linked to the original post to allow viewers to upvote/downvote or comment: this is a player but the real deal is the subreddit itself.
+Every video shown is easily linked to the original post to allow viewers to upvote/downvote or comment.
 
 ## Licence
 
-The project is released with the [MIT Licence](LICENCE).
+The project is released under the [MIT Licence](LICENCE).
 
-You can fork, edit and distribute the app as you please, I just kindly ask to give me credit in your derivative works.
+You can fork, edit and distribute the app as you please, **I just kindly ask to give me credit in your derivative works.**
 
 ## Dev environment
 
@@ -33,24 +36,28 @@ After cloning the project you have to install the npm libraries: cd to the proje
 npm install
 ```
 
-After that, using gulp (default), you can compile the code, start a watcher (recompile when you change a file) and a minimal web server with live reload (<http://localhost:3000>):
+After that, using gulp, you can compile the code, start a watcher (recompile when you change a file) and start a minimal web server with live reload (default at <http://localhost:3000>):
 
 ```
 gulp
 ```
 
-Otherwise you can just build the project for production, finding the final product in the `dist` folder:
+Otherwise you can just build the project for production: you will find the distibution files in the `dist` folder:
 
 ```
 gulp dist
 ```
+
+## TODO
+
+- [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)
 
 ## Features
 
 - [x] Load and parse data from /r/youtubehaiku
 
   - [x] Support "start" and "end" parameters
-  - [x] Extract tags (haiku, poetry and meme with special colors)
+  - [x] Extract tags (haiku, poetry and meme, then show them with official colors)
 
 - [x] Load and use youtube player (iframe API)
 
@@ -58,49 +65,34 @@ gulp dist
   - [x] Sync controls with player status
   - [x] Playing progress bar (adjusted to real video length)
   - [x] Buffering progress bar (animated!)
-  - [x] Play/Pause button (+keyboard shortcut)
+  - [x] Play/Pause button
 
-- [x] Logo links to the reddit
-
-- [x] Show next video thumbnail and title
+- [x] Show next video thumbnail and title (click play next video)
 - [x] Keyboard controls
+- [x] Logo links to the subreddit
 - [x] Video title links to reddit post
-- [x] show upvotes and submitter
-- [x] Settings in cookie (first time on site?)
-- [x] Stop next/prev when reach end/start
+- [x] Show upvotes and submitter
+- [x] Settings in cookie (first time on site and channel preferences)
+- [x] Stop next/prev when reached end/start
 - [x] Better console.logs (with ascii banner!)
-- [x] info splash only first time (or when press H)
-- [x] channel
+- [x] Channels
 
-  - [x] choose/change channel (reset posts)
-  - [x] choose what tags you want in the channel (haiku, poetry, meme and nsfw)
-  - [x] save settings in cookies
+  - [x] Choose what tags you want in the channel (haiku, poetry, meme and nsfw)
+  - [x] Choose channel (reset player)
 
-- [x] videos forever
+- [x] Videos forever
 
-  - [x] batches by 40 videos per time with filters (or until you got at least 20 valid videos)
-  - [x] load more videos on the fly when the batch is 10 videos away to the end
-  - [x] start playing when you have 3 valid videos
+  - [x] Loads 40 posts per time with filters (or until you got at least 20 valid posts)
+  - [x] Loads more posts on the fly when the buffer is 10 posts away to the end
+  - [x] Start the player when you have 3 valid posts in the buffer
   
 - [x] favicon
 
-## Improvements
-
-- [x] keyboard shortcuts with UI button (hide only keys on mobile, not the buttons)
 
 ## Bugfixes
 
 - [x] All interactive UI should not get higlighted (use A+HREF+ONLICK instead of DIV+ONCLICK)
 - [x] Fix sudden end of video in loaded video
-- [x] Playback from mobile cannot start automatically
-- [x] Sanitize strings
-- [x] Remove hover effects on mobile to avoid "stay hover" after a touch
-
-## TODO
-
-- [ ] review README.md
-- [ ] better splash introduction (what is haiku, poetry, meme and how youtubehaiku was born)
-
-- [] DEPLOY: try to load as much as possible from git
-
-- [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)
+- [x] Playback from mobile cannot start automatically (let the user start)
+- [x] Sanitize strings in html
+- [x] Remove hover effects on mobile to avoid :hover remains after a "click"

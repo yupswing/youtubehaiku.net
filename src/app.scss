@@ -90,7 +90,7 @@ body {
         background: #eee;
         border: 1px solid #ccc;
 
-        > span {
+        > span:not(.label) {
           display: inline-block;
           border-radius: 8px;
           padding: 3px;
@@ -121,7 +121,7 @@ body {
           }
         }
 
-        > label {
+        span.label {
           cursor: pointer;
           font-size: 13px;
           color: #333;
@@ -352,7 +352,7 @@ a.title:not(.no-hover):hover {
   background: #333 !important;
   color: #eee;
 
-  label {
+  span.label {
     color: #eee !important;
   }
 }
@@ -361,7 +361,7 @@ a.title:not(.no-hover):hover {
   background-color: #191CC1 !important; // original #191CC1
   color: #eee;
 
-  label {
+  span.label {
     color: #eee !important;
   }
 }
@@ -370,7 +370,7 @@ a.title:not(.no-hover):hover {
   background-color: #A10000 !important; // original #A10000
   color: #eee;
 
-  label {
+  span.label {
     color: #eee !important;
   }
 }
@@ -379,7 +379,7 @@ a.title:not(.no-hover):hover {
   background-color: #EAD00E !important; // original #EAD00E
   color: #333;
 
-  label {
+  span.label {
     color: #333 !important;
   }
 }
