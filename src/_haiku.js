@@ -32,7 +32,7 @@ var Haiku = function(_player_id) {
     is_back: false,
     no_tags: [],
     channel: {
-      category: 'new',
+      category: 'hot',
       timeframe: '',
     }
   };
@@ -174,7 +174,7 @@ var Haiku = function(_player_id) {
 
   function renderChannel() {
     $('.channel').removeClass('success');
-    $('#channel-'+settings.channel.category+'-'+settings.channel.timeframe).addClass('success');
+    $('#channel-' + settings.channel.category + '-' + settings.channel.timeframe).addClass('success');
   }
 
 
@@ -210,11 +210,8 @@ var Haiku = function(_player_id) {
 
   function loadSettings() {
     settings = Cookies.getJSON('settings') || default_settings;
-    if (!settings.no_tags) settings.no_tags = []; // fix empty tags
-    if (!settings.channel) settings.channel = {
-      category: 'new',
-      timeframe: ''
-    }; // fix empty channel
+    if (!settings.no_tags) settings.no_tags = default_settings.no_tags; // fix empty tags
+    if (!settings.channel) settings.channel = default_settings.channel; // fix empty channel
   }
 
   function setting(key, value) {
@@ -234,13 +231,18 @@ var Haiku = function(_player_id) {
     current = -1;
 
     var url = "https://www.reddit.com/r/youtubehaiku/";
-    if (settings.channel.category == 'new') {
-      url += "new.json?sort=new"; // New posts
-    } else if (settings.channel.category == 'top')
-      url += "top.json?t=" + settings.channel.timeframe + "&sort=top"; // Top posts all time
-    else {
-      // default
-      url += "new.json?sort=new";
+    switch (settings.channel.category) {
+      case 'new':
+        url += "new.json?sort=new"; // New posts
+        break;
+      case 'top':
+        url += "top.json?t=" + settings.channel.timeframe + "&sort=top"; // Top posts all time
+        break;
+      case 'rising':
+        url += "rising.json?"; // Hot posts
+        break;
+      default: // hot
+        url += "hot.json?"; // Hot posts
     }
     url += "&limit=100";
     // console.log(url);
