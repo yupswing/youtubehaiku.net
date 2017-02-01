@@ -34,7 +34,7 @@ body {
   z-index: 0;
 }
 
-.overlay {
+.overtube {
   display: none;
   position: absolute;
   width: 100%;
@@ -145,12 +145,22 @@ body {
   color: white;
   cursor: pointer;
   font-size: 25px;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  padding: 5px 10px;
+  padding: 7px;
+  font-size: 0;
+  opacity: 0.9;
+  transition: all 0.5s ease;
 
   &:hover {
+    background-color: rgba(0, 0, 0, 0.6);
     text-decoration: none;
+    opacity: 1;
+  }
+
+  img {
+    width: 86px;
+    height: 26px;
   }
 }
 
@@ -170,6 +180,7 @@ body {
     display: inline-block;
     background: #f42323;
     background-image: linear-gradient(to bottom, #b31217, #e52d27);
+    background-image: webkit-linear-gradient(to bottom, #b31217, #e52d27);
     transition: width 0.1s ease;
 
     &.buffering:after {
@@ -182,6 +193,7 @@ body {
       bottom: 0;
       right: 0;
       background-image: linear-gradient( -45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
+      background-image: -webkit-linear-gradient( -45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
       z-index: 100;
       background-size: 20px 20px;
       animation: move 2s linear infinite;
@@ -272,7 +284,7 @@ body {
     overflow: hidden;
 
     .thumbnail {
-      background: #fff;
+      background: #000;
       margin-right: 10px;
       height: 70px;
       width: 93px;
@@ -286,7 +298,26 @@ body {
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
+  text-decoration: none;
   text-overflow: ellipsis;
+
+  .info {
+    color: #ccc;
+    font-size: 12px;
+    margin-top: 2px;
+
+    span {
+      display: inline-block;
+    }
+  }
+}
+
+a.title:hover {
+  text-decoration: none !important;
+
+  #title {
+    text-decoration: underline !important;
+  }
 }
 
 #title {
@@ -313,15 +344,11 @@ body {
   font-weight: bold;
   color: #ccc;
   display: inline-block;
+  font-size: 8px;
   padding: 1px 3px;
   border-radius: 5px;
   background: #333;
   text-transform: uppercase;
-
-  &.small {
-    font-size: 8px;
-    margin-bottom: 2px;
-  }
 }
 
 .bg_other {
@@ -388,4 +415,16 @@ kbd {
 
 kbd[title] {
   cursor: help;
+}
+
+.fa.shortcut {
+  font-size: 12px;
+  background-color: #353535;
+  display: inline-block;
+  width: 15px;
+  padding: 2px;
+  border-radius: 13px;
+  text-align: center;
+  color: #eee;
+  border: 1px solid #999;
 }

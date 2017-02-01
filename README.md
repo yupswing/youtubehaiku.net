@@ -9,11 +9,11 @@ Licence: MIT
 
 # YOUTUBEHAIKU.NET
 
-Youtube Haiku HTML5 Player is an HTML5 web application to play, continuosly, videos gathered from the Youtube Haiku subreddit ([/r/youtubehaiku](https://www.reddit.com/r/youtubehaiku)) in a nice and minimalist interface.
+Youtube Haiku Player is an HTML5 web application to play, continuosly, videos gathered from the Youtube Haiku subreddit ([/r/youtubehaiku](https://www.reddit.com/r/youtubehaiku)) in a nice and minimalist interface.
 
 The app is live at <http://youtubehaiku.net>
 
-You can choose the source of the videos (top posts, new posts), the range (today, this week, all time...) and the tags you want to exclude (haiku, poetry, meme, nsfw, load): in the app, a combination of those is called a "channel".
+You can choose the source of the videos (top posts, new posts...), the range (today, this week, all time...) and the tags you want to exclude (haiku, poetry, meme, nsfw).
 
 The video list is updated while you watch (or when you change the "channel") and will play forever until the end of the reddit (and trust me, there are a lot of videos to watch).
 
@@ -61,9 +61,11 @@ gulp dist
   - [x] Play/Pause button (+keyboard shortcut)
 
 - [x] Logo links to the reddit
+
 - [x] Show next video thumbnail and title
 - [x] Keyboard controls
 - [x] Video title links to reddit post
+- [x] show upvotes and submitter
 - [x] Settings in cookie (first time on site?)
 - [x] Stop next/prev when reach end/start
 - [x] Better console.logs (with ascii banner!)
@@ -74,16 +76,30 @@ gulp dist
   - [x] choose what tags you want in the channel (haiku, poetry, meme and nsfw)
   - [x] save settings in cookies
 
+- [x] videos forever
+
+  - [x] batches by 40 videos per time with filters (or until you got at least 20 valid videos)
+  - [x] load more videos on the fly when the batch is 10 videos away to the end
+  - [x] start playing when you have 3 valid videos
+  
+## Improvements
+
+- [x] keyboard shortcuts with UI button (hide only keys on mobile, not the buttons)
+
 ## Bugfixes
 
 - [x] All interactive UI should not get higlighted (use A+HREF+ONLICK instead of DIV+ONCLICK)
 - [x] Fix sudden end of video in loaded video
-- [x] Playback from mobile cannot start automatically (manage the cue events)
+- [x] Playback from mobile cannot start automatically
+- [x] Sanitize strings
 
 ## TODO
 
+- [ ] review README.md
 - [ ] better splash introduction (what is haiku, poetry, meme and how youtubehaiku was born)
 
-- [ ] videos forever
-  - [ ] batches by 25 videos per time with filters (or until you got at least 20 valid videos)
-  - [ ] load more videos on the fly when the batch is 5 videos away to the end
+- [ ] favicon
+
+- [ ] DEPLOY: try to load as much as possible from git
+
+- [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)

@@ -5,6 +5,23 @@ Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 */
 
+// var POSTS_CACHE_PLAY = 3; // how many posts we need to start the player
+// var POSTS_CACHE_READY = 25; // how many posts we need ready in cache
+// var POSTS_REQUEST_LIMIT = POSTS_CACHE_READY + 5; // how many posts we ask to reddit per request
+// var POSTS_CACHE_TRIGGER = 5; // how many posts we have left when we trigger loading a new batch
+
+
+var POSTS_CACHE_PLAY = 3; // how many posts we need to start the player
+
+var POSTS_CACHE_TRIGGER = 10; // how many posts we have left when we trigger loading a new batch
+var POSTS_CACHE_READY = POSTS_CACHE_TRIGGER * 2; // how many posts we need ready in cache
+var POSTS_REQUEST_LIMIT = POSTS_CACHE_READY * 2; // how many posts we ask to reddit per request
+
+var URL_LOGO = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/logo.png';
+var URL_NSFW = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/nsfw.png';
+var URL_END = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/end.png';
+var URL_404 = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/404.png';
+
 var Haiku = function(_player_id) {
   var player_id = _player_id; // the player ID (element target for youtube iframe api)
 
@@ -13,12 +30,15 @@ var Haiku = function(_player_id) {
 
   var is_mobile = false; // the browser is a mobile browser
 
-  var is_youtube_loaded = false; // is youtube ready to be used
-  var is_reddit_loaded = false; // has reddit loaded the data
+  var is_youtube_ready = false; // is youtube ready to be used
+  var is_reddit_ready = false; // has reddit loaded the data
+  var is_reddit_loading = false; // is reddit loading data (no double calls)
   var is_ready = false; // youtube OK and reddit OK
 
   var posts = []; // posts
   var current = -1; // current post index
+
+  var last_retrived_post = null; // the last post got from reddit
 
   var is_first_play = true; // it is the first played video of the app (used with mobile to cue instead of load)
   var has_started = false; // the current video has started (or it is cued)
@@ -27,6 +47,8 @@ var Haiku = function(_player_id) {
   var is_ui_showing_buffering = false; // keep track if the UI is showing as buffering
 
   var is_overlay_shown = false;
+
+  var is_channel_finished = false;
 
   var default_settings = {
     is_back: false,
@@ -37,18 +59,20 @@ var Haiku = function(_player_id) {
     }
   };
 
-  var available_tags = ['haiku', 'poetry', 'meme', 'nsfw'];
+  var available_tags = ['haiku', 'poetry', 'meme', 'nsfw', ''];
   var at_least_one_of_this_tags = ['haiku', 'poetry', 'meme'];
 
 
   function init() {
+
+    $('.logo img').attr('src', URL_LOGO);
 
     console.log("==================================================================================\n __   __          _         _          _   _       _ _                       _   \n \\ \\ / /__  _   _| |_ _   _| |__   ___| | | | __ _(_) | ___   _   _ __   ___| |_ \n  \\ V / _ \\| | | | __| | | | '_ \\ / _ \\ |_| |/ _` | | |/ / | | | | '_ \\ / _ \\ __|\n   | | (_) | |_| | |_| |_| | |_) |  __/  _  | (_| | |   <| |_| |_| | | |  __/ |_ \n   |_|\\___/ \\__,_|\\__|\\__,_|_.__/ \\___|_| |_|\\__,_|_|_|\\_\\\\__,_(_)_| |_|\\___|\\__|\n==================================================================================\n");
 
     is_mobile = isMobile();
     if (is_mobile) {
       console.log('* You are using a MOBILE browser');
-      $('#shortcuts').hide(); // hide keyboard shortcuts
+      $('.no_mobile').hide(); // hide keyboard shortcuts
     } else {
       console.log('* You are using a DESKTOP browser');
     }
@@ -68,7 +92,7 @@ var Haiku = function(_player_id) {
     renderChannel();
 
     // Now we should load the posts...
-    loadReddit();
+    loadReddit(true);
     // ...and startup the youtube api
     loadYoutube();
 
@@ -108,6 +132,9 @@ var Haiku = function(_player_id) {
           console.log('* Thanks for pressing the random key ' + event.which);
       }
     });
+
+    $('#end').hide();
+
   }
 
   function onWindowBlur() {
@@ -217,18 +244,43 @@ var Haiku = function(_player_id) {
   function setting(key, value) {
     if (!settings) settings = {};
     settings[key] = value;
-    Cookies.set('settings', settings);
+    Cookies.set('settings', settings, {
+      expires: 365
+    });
   }
 
-  function loadReddit() {
+  // var checkvideos = []; //#TODO remove all checkvideos
+
+  function loadReddit(start_over) {
+    if (!start_over) {
+      if (is_channel_finished) {
+        console.log('* We have reached the end of the channel');
+        return;
+      }
+
+      if (is_reddit_loading) {
+        console.log('* Already loading reddit posts');
+        return;
+      }
+    }
 
     console.log('* Start loading reddit posts');
+    is_reddit_loading = true;
 
-    stop();
+    if (start_over) {
+      // we discard everything and start over
+      stop();
+      posts.length = 0;
+      current = -1;
+      is_reddit_ready = false;
+      last_retrived_post = null;
+      is_channel_finished = false;
+      console.log('* Reddit start over');
+    } else {
+      console.log('* Reddit continue from "' + last_retrived_post + '"');
+    }
+
     // console.log('* Excluded tags ' + settings.no_tags);
-    is_reddit_loaded = false;
-    posts.length = 0;
-    current = -1;
 
     var url = "https://www.reddit.com/r/youtubehaiku/";
     switch (settings.channel.category) {
@@ -244,8 +296,12 @@ var Haiku = function(_player_id) {
       default: // hot
         url += "hot.json?"; // Hot posts
     }
-    url += "&limit=100";
-    // console.log(url);
+    url += "&limit=" + POSTS_REQUEST_LIMIT;
+    if (last_retrived_post) {
+      // the page we want
+      url += "&after=" + encodeURIComponent(last_retrived_post);
+    }
+    console.log('URL: ' + url);
 
     // videoID is usually in these formats
     // v/XXXXXX | embed/XXXXXX | ?v=XXXXXX | &v=XXXXXX
@@ -253,22 +309,28 @@ var Haiku = function(_player_id) {
     var re_start = /start=([0-9]+)/gi; // the video start second (optional)
     var re_end = /end=([0-9]+)/gi; // the video end second (optional)
     var post, data;
-    var videoID, permalink, thumbnail, start, end;
-    var videoSource, second, tag_index, to_be_excluded;
+    var videoID, permalink, thumbnail, start, end, score, author;
+    var videoSource, tmp_exec, tag_index, to_be_excluded, found;
+    var retrived_count, kept_count;
 
     $.get(url, function(response) {
       // console.log(response);
+      retrived_count = response.data.children.length;
+      kept_count = 0;
+      console.error('after ' + response.data.after);
+      last_retrived_post = response.data.after || null;
+      console.log('Retrived: ' + retrived_count);
       for (var index in response.data.children) {
-
-        // reset regexp
-        re_videoid.lastIndex = 0;
-        re_start.lastIndex = 0;
-        re_end.lastIndex = 0;
 
         // console.log(response.data.children[index]);
         if (!response.data.children[index]) continue; // no data for this post
         post = response.data.children[index].data;
         if (!post || !post.media || !post.media.oembed) continue; // no sufficient data for this post
+
+        // reset regexp
+        re_videoid.lastIndex = 0;
+        re_start.lastIndex = 0;
+        re_end.lastIndex = 0;
 
         // Extracting the videoID
         // the url could be straight or inside a iframe html src
@@ -276,25 +338,47 @@ var Haiku = function(_player_id) {
         videoSource = post.media.oembed.html || post.media.oembed.url;
         // we substitute the URLEncoded chars that are needed to match the videoID
         videoSource = videoSource.replace(/%2f/gi, '/').replace(/%3d/gi, '=').replace(/%26/gi, '&').replace(/%3f/gi, '?');
-        videoID = re_videoid.exec(videoSource)[1];
+        tmp_exec = re_videoid.exec(videoSource);
+        if (tmp_exec) {
+          videoID = tmp_exec[1];
+        } else {
+          console.error('* VideoID not present: ' + videoSource);
+          continue; // NO VIDEO ID
+        }
 
         // Extracting start and end (both optional)
         start = end = 0;
-        second = re_start.exec(videoSource);
-        if (second) start = parseInt(second[1]);
-        second = re_end.exec(videoSource);
-        if (second) end = parseInt(second[1]);
+        tmp_exec = re_start.exec(videoSource);
+        if (tmp_exec) start = parseInt(tmp_exec[1]);
+        tmp_exec = re_end.exec(videoSource);
+        if (tmp_exec) end = parseInt(tmp_exec[1]);
 
         // Extracting other data
         title = post.title.replace(/\[[^\]]+\]/gi, '').trim();
         thumbnail = post.thumbnail;
+        if (thumbnail == 'nsfw') thumbnail = URL_NSFW;
         permalink = 'https://www.reddit.com' + post.permalink;
+        score = post.score || 0;
+        author = 'u/' + post.author;
 
         // Extracting tags (and checking filter)
-        tags = post.title.match(/\[[^\]]+\]/gi) || [];
         to_be_excluded = false;
+        tags = post.title.match(/\[[^\]]+\]/gi) || ['haiku']; // default tag is haiku
+
         for (tag_index in tags) {
           tags[tag_index] = tags[tag_index].replace(/[\]\[]/gi, '').toLowerCase();
+        }
+
+        found = false;
+        for (tag_index in at_least_one_of_this_tags) {
+          if (tags.indexOf(at_least_one_of_this_tags[tag_index]) > -1) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) tags.push('haiku');
+
+        for (tag_index in tags) {
           if (settings.no_tags.indexOf(tags[tag_index]) > -1) {
             to_be_excluded = true;
             // console.log('* Excluded video ' + tags + ' ' + title + '" because of tag ' + tags[tag_index]);
@@ -303,20 +387,61 @@ var Haiku = function(_player_id) {
         }
         if (to_be_excluded) continue;
 
+        // if (checkvideos.indexOf(post.id) > -1) {
+        //   console.error('VIDEO ALREADY PRESENT ' + post.id);
+        // }
+        // checkvideos.push(post.id);
+
         // Create our player post from the parsed data
         data = {
+          id: post.id,
           videoID: videoID,
           title: title,
           thumbnail: thumbnail,
           videoStart: start,
           videoEnd: end,
           tags: tags,
+          score: score,
+          author: author,
           permalink: permalink,
         };
         // console.log(data);
         posts.push(data);
+        kept_count++;
+        if (!is_reddit_ready && posts.length > POSTS_CACHE_PLAY) {
+          // reddit is ready when we have at least two valid posts
+          console.log('+ Reddit is ready');
+          // console.log(posts);
+          is_reddit_ready = true;
+          onReady();
+        }
       }
-      onRedditReady();
+
+      console.log('Kept: ' + kept_count);
+      console.log('Total: ' + posts.length + ' | Playlist: ' + (posts.length - (current + 1)));
+
+      if (last_retrived_post === null) {
+        // no more posts
+        console.log('* We have reached the end of the channel');
+        is_channel_finished = true;
+        is_reddit_loading = false; // keep track of this
+        return;
+      }
+
+      // we processed all the posts in the response
+      // let's check if it is enough
+      if ((posts.length - (current + 1) <= POSTS_CACHE_READY)) {
+        // it is not enough
+        // let's call ourself to get a new batch
+        is_reddit_loading = false; // keep track of this
+        loadReddit();
+        return;
+      }
+      is_reddit_loading = false; // keep track of this
+
+    }).fail(function(e) {
+      is_reddit_loading = false; // keep track of this
+      console.log('* Reddit error: ' + e);
     });
   }
 
@@ -327,13 +452,6 @@ var Haiku = function(_player_id) {
     youtubeapi_script.src = "https://www.youtube.com/iframe_api";
     var first_script = document.getElementsByTagName('script')[0];
     first_script.parentNode.insertBefore(youtubeapi_script, first_script);
-  }
-
-  function onRedditReady() {
-    console.log('+ Reddit is ready');
-    // console.log(posts);
-    is_reddit_loaded = true;
-    onReady();
   }
 
   function onYoutubeReady() {
@@ -358,7 +476,8 @@ var Haiku = function(_player_id) {
 
   function onYoutubePlayerReady() {
     console.log('+ Youtube Player is ready');
-    is_youtube_loaded = true;
+    is_youtube_ready = true;
+    player.mute(); //#DEPLY comment
     onReady();
   }
 
@@ -396,7 +515,7 @@ var Haiku = function(_player_id) {
   }
 
   function onReady() {
-    if (is_youtube_loaded && is_reddit_loaded) {
+    if (is_youtube_ready && is_reddit_ready) {
       console.log('* All ready!');
       console.log('----------------------------------------');
       // yes we are really ready!
@@ -427,12 +546,13 @@ var Haiku = function(_player_id) {
     settings.channel.timeframe = timeframe || '';
     setting('channel', settings.channel);
     renderChannel();
-    loadReddit();
+    loadReddit(true);
     hideOverlay();
   }
 
   function hideOverlay() {
     is_overlay_shown = false;
+    $('#end').hide();
     $('.overlay').hide();
   }
 
@@ -443,7 +563,7 @@ var Haiku = function(_player_id) {
     if (!tags) return '';
     for (var index in tags) {
       tag = tags[index];
-      output += ' <span class="tag small bg_' + tag + '">' + tag.toUpperCase() + '</span>';
+      output += ' <span class="tag small bg_' + tag + '">' + tag.replace(/</g, '&lt;').replace(/>/g, '&gt;').toUpperCase() + '</span>';
     }
     return output;
   }
@@ -451,22 +571,38 @@ var Haiku = function(_player_id) {
   function playVideoFromCurrentPost() {
     var post = posts[current];
     var next = posts[current + 1];
+
+    console.log(posts.length - (current + 1));
+    if ((posts.length - (current + 1) <= POSTS_CACHE_TRIGGER)) {
+      // trigger loading next batch
+      // (if already queued will do nothing)
+      console.log('Trigger reload');
+      loadReddit();
+    }
+
+
     if (!post) {
       console.log('# Error: post index:' + current + ' does not exists!');
       return;
     }
-    console.log('> Playing post index:' + current + ' (' + post.title + ') (' + post.permalink + ')');
+    console.log('> Playing post ' + post.id + ' index:' + current + ' (' + post.title + ') (' + post.permalink + ')');
     // console.log(post);
     $('#tags').html(makeTags(post.tags));
-    $('#title').html(post.title);
+    $('#score').text(post.score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('#author').text(post.author);
+    $('#title').text(post.title);
     if (next) {
       $('#next_tags').html(makeTags(next.tags));
-      $('#next_title').html(next.title);
+      $('#next_title').text(next.title);
       $('#next_thumbnail').attr('src', next.thumbnail);
+    } else if (is_channel_finished) {
+      $('#next_tags').html(makeTags(['OH BOY']));
+      $('#next_title').text('End of the channel');
+      $('#next_thumbnail').attr('src', is_channel_finished ? URL_END : URL_END);
     } else {
-      $('#next_tags').html('');
-      $('#next_title').html('');
-      $('#next_thumbnail').attr('src', '');
+      $('#next_tags').html(makeTags(['OH BOY']));
+      $('#next_title').text('Loading posts...');
+      $('#next_thumbnail').attr('src', is_channel_finished ? URL_END : URL_404);
     }
     var options = {
       'videoId': post.videoID
@@ -502,6 +638,10 @@ var Haiku = function(_player_id) {
     if (current >= posts.length - 1) {
       console.log("# Can't go forward, it is the last post");
       current = posts.length - 1;
+      if (is_channel_finished) {
+        $('#end').show();
+        channels();
+      }
       return;
     }
     current++;
@@ -598,5 +738,6 @@ var Haiku = function(_player_id) {
     channels: channels,
     chooseChannel: chooseChannel,
     toggleTag: toggleTag,
+    hideOverlay: hideOverlay,
   };
 };
