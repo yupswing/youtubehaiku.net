@@ -1,5 +1,5 @@
 <!--
-Youtube Haiku Player 0.1
+Youtube Haiku Player 0.2.0
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -166,14 +166,19 @@ Licence: MIT
     <div class="overlay splash" style="display:none;">
       <div class="box">
         <h1>You<span class="tube">Tube</span>Haiku.net</h1>
-        <p>Welcome my friend,<br>
-          here you can enjoy the video posted by the users of the subreddit
-          <strong>
-            <a onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
-              r/youtubehaiku
-            </a>
-          </strong>
-          .</p>
+        <p style="text-align:justify;">Enjoy the video posted by the users of the subreddit
+            <a style="font-weight:bold;" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')"><i class="fa fa-reddit-alien"></i> r/youtubehaiku</a>
+          in a beautiful modern player that will make you waste even more time than usual.</p>
+        <p style="text-align:justify;">
+          You just need to know that <span class="tag bg_haiku">HAIKU</span>
+          are poetic videos under 14 seconds,
+          <span class="tag bg_poetry">POETRY</span>
+          are still poetic but longer (up to 30 seconds) and then, you know, there are
+          <span class="tag bg_meme">Memes</span>.</p>
+        <p style="font-size:120%;text-align:center;">youtubehaiku.net is made by <a href="http://simonecingano.it" style="font-weight:bold;" target="_blank">Simone Cingano</a> (aka u/yupswing).<br>
+          The project is <em>open source</em> and you can fork the code on
+          <a style="font-weight:bold;" href="https://github.com/yupswing/youtubehaiku.net" target="_blank"><i class="fa fa-github"></i> github</a>
+        </p>
         <div class="buttons">
           <a class="button" onclick="haiku.play()">
             <span style="width:150px;">
@@ -190,7 +195,7 @@ Licence: MIT
           </sup>
         </p>
         <div>
-          <p>You can control the streaming with the buttons on the lower right corner or use the keyboard shortcuts:</p>
+          <p>Control the player with the buttons<span class="no_mobile"> or use the keyboard shortcuts</span>:</p>
           <ul>
             <li>
               <i class="shortcut fa fa-play"></i>
@@ -285,8 +290,9 @@ Licence: MIT
     <div class="next">
       <a class="title" onclick="haiku.next()">
         <div class="info"><img src="" class="thumbnail" id="next_thumbnail" style="">
-        <strong>Coming up:</strong><br>
-        <span class="tags" id="next_tags"></span></div>
+          <strong>Coming up:</strong><br>
+          <span class="tags" id="next_tags"></span>
+        </div>
         <div id="next_title"></div>
       </a>
     </div>

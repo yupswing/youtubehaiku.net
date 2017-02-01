@@ -1,15 +1,9 @@
 /*
-Youtube Haiku Player 0.1
+Youtube Haiku Player 0.2.0
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 */
-
-// var POSTS_CACHE_PLAY = 3; // how many posts we need to start the player
-// var POSTS_CACHE_READY = 25; // how many posts we need ready in cache
-// var POSTS_REQUEST_LIMIT = POSTS_CACHE_READY + 5; // how many posts we ask to reddit per request
-// var POSTS_CACHE_TRIGGER = 5; // how many posts we have left when we trigger loading a new batch
-
 
 var POSTS_CACHE_PLAY = 3; // how many posts we need to start the player
 
@@ -17,10 +11,11 @@ var POSTS_CACHE_TRIGGER = 10; // how many posts we have left when we trigger loa
 var POSTS_CACHE_READY = POSTS_CACHE_TRIGGER * 2; // how many posts we need ready in cache
 var POSTS_REQUEST_LIMIT = POSTS_CACHE_READY * 2; // how many posts we ask to reddit per request
 
-var URL_LOGO = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/logo.png';
-var URL_NSFW = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/nsfw.png';
-var URL_END = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/end.png';
-var URL_404 = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/404.png';
+var URL_BASE = 'https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/';
+var URL_LOGO = URL_BASE + 'logo.png';
+var URL_NSFW = URL_BASE + 'nsfw.png';
+var URL_END = URL_BASE + 'end.png';
+var URL_404 = URL_BASE + '404.png';
 
 var Haiku = function(_player_id) {
   var player_id = _player_id; // the player ID (element target for youtube iframe api)

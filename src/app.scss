@@ -1,5 +1,5 @@
 /*
-Youtube Haiku Player 0.1
+Youtube Haiku Player 0.2.0
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
