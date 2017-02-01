@@ -26,7 +26,20 @@ var Haiku = function(_player_id) {
   var is_buffering = true; // the player is buffering (or starting)
   var is_ui_showing_buffering = false; // keep track if the UI is showing as buffering
 
-  var is_splash_shown = false;
+  var is_overlay_shown = false;
+
+  var default_settings = {
+    is_back: false,
+    no_tags: [],
+    channel: {
+      category: 'new',
+      timeframe: '',
+    }
+  };
+
+  var available_tags = ['haiku', 'poetry', 'meme', 'nsfw'];
+  var at_least_one_of_this_tags = ['haiku', 'poetry', 'meme'];
+
 
   function init() {
 
@@ -51,6 +64,8 @@ var Haiku = function(_player_id) {
     } else {
       console.log('* Welcome back to youtubehaiku.net');
     }
+    renderTags();
+    renderChannel();
 
     // Now we should load the posts...
     loadReddit();
@@ -81,7 +96,11 @@ var Haiku = function(_player_id) {
         case 80: // P
           playPause();
           break;
-        case 190: // ?
+        case 190: // .
+        case 83: // S
+          channels();
+          break;
+        case 191: // ?
         case 72: // H
           splash();
           break;
@@ -94,6 +113,73 @@ var Haiku = function(_player_id) {
   function onWindowBlur() {
     console.log('* The window lost is focus');
     pause();
+  }
+
+  function toggleTag(tag) {
+    var index_of_tag = settings.no_tags.indexOf(tag);
+    if (index_of_tag >= 0) {
+      // remove from the excluded tags
+      settings.no_tags.splice(index_of_tag, 1);
+    } else {
+      // add to the excluded tags
+      if (at_least_one_of_this_tags.indexOf(tag) > -1) {
+        // it is one of the needed tags
+        // let's check if at least one of the others is present
+        var found;
+        var essential_tag;
+        for (var index in at_least_one_of_this_tags) {
+          essential_tag = at_least_one_of_this_tags[index];
+          //we don't need to check the current toggled one
+          if (essential_tag == tag) continue;
+          if (settings.no_tags.indexOf(essential_tag) < 0) {
+            // one essential tag is not excluded
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          // we did not found any essential tags
+          // we cannot remove the current one because it is essential
+          return;
+        }
+      }
+      settings.no_tags.push(tag);
+    }
+    renderTags();
+    //#TODO remove post with tags from playlist
+    setting('no_tags', settings.no_tags);
+  }
+
+  function renderTags() {
+    var element;
+    var tag;
+    for (var index in available_tags) {
+      tag = available_tags[index];
+      element = $('#tag-' + tag);
+      if (!element) continue;
+      icon = element.find('.fa');
+      if (settings.no_tags.indexOf(tag) < 0) {
+        element.removeClass('danger');
+        element.addClass('success');
+        icon.removeClass('fa-times');
+        icon.addClass('fa-check');
+      } else {
+        element.removeClass('success');
+        element.addClass('danger');
+        icon.removeClass('fa-check');
+        icon.addClass('fa-times');
+      }
+    }
+  }
+
+  function renderChannel() {
+    $('#channel-new-').removeClass('success');
+    $('#channel-top-all').removeClass('success');
+    $('#channel-top-year').removeClass('success');
+    $('#channel-top-month').removeClass('success');
+    $('#channel-top-week').removeClass('success');
+    $('#channel-top-day').removeClass('success');
+    $('#channel-'+settings.channel.category+'-'+settings.channel.timeframe).addClass('success');
   }
 
 
@@ -128,7 +214,12 @@ var Haiku = function(_player_id) {
   }
 
   function loadSettings() {
-    settings = Cookies.getJSON('settings') || {};
+    settings = Cookies.getJSON('settings') || default_settings;
+    if (!settings.no_tags) settings.no_tags = []; // fix empty tags
+    if (!settings.channel) settings.channel = {
+      category: 'new',
+      timeframe: ''
+    }; // fix empty channel
   }
 
   function setting(key, value) {
@@ -138,12 +229,26 @@ var Haiku = function(_player_id) {
   }
 
   function loadReddit() {
+
+    console.log('* Start loading reddit posts');
+
+    stop();
+    // console.log('* Excluded tags ' + settings.no_tags);
+    is_reddit_loaded = false;
+    posts.length = 0;
+    current = -1;
+
     var url = "https://www.reddit.com/r/youtubehaiku/";
-    url += "new.json?sort=new"; // New posts
-    // url+="top.json?t=all&sort=top";         // Top posts all time
-    // url+="top.json?t=week&sort=top";        // Top posts week
-    // url+="top.json?t=day&sort=top";         // Top posts today
+    if (settings.channel.category == 'new') {
+      url += "new.json?sort=new"; // New posts
+    } else if (settings.channel.category == 'top')
+      url += "top.json?t=" + settings.channel.timeframe + "&sort=top"; // Top posts all time
+    else {
+      // default
+      url += "new.json?sort=new";
+    }
     url += "&limit=100";
+    // console.log(url);
 
     // videoID is usually in these formats
     // v/XXXXXX | embed/XXXXXX | ?v=XXXXXX | &v=XXXXXX
@@ -152,7 +257,7 @@ var Haiku = function(_player_id) {
     var re_end = /end=([0-9]+)/gi; // the video end second (optional)
     var post, data;
     var videoID, permalink, thumbnail, start, end;
-    var videoSource, second;
+    var videoSource, second, tag_index, to_be_excluded;
 
     $.get(url, function(response) {
       // console.log(response);
@@ -185,9 +290,21 @@ var Haiku = function(_player_id) {
 
         // Extracting other data
         title = post.title.replace(/\[[^\]]+\]/gi, '').trim();
-        tags = post.title.match(/\[[^\]]+\]/gi) || [];
         thumbnail = post.thumbnail;
         permalink = 'https://www.reddit.com' + post.permalink;
+
+        // Extracting tags (and checking filter)
+        tags = post.title.match(/\[[^\]]+\]/gi) || [];
+        to_be_excluded = false;
+        for (tag_index in tags) {
+          tags[tag_index] = tags[tag_index].replace(/[\]\[]/gi, '').toLowerCase();
+          if (settings.no_tags.indexOf(tags[tag_index]) > -1) {
+            to_be_excluded = true;
+            // console.log('* Excluded video ' + tags + ' ' + title + '" because of tag ' + tags[tag_index]);
+            break;
+          }
+        }
+        if (to_be_excluded) continue;
 
         // Create our player post from the parsed data
         data = {
@@ -220,13 +337,6 @@ var Haiku = function(_player_id) {
     // console.log(posts);
     is_reddit_loaded = true;
     onReady();
-  }
-
-  function splash() {
-    if (is_splash_shown) return;
-    if (is_ready) pause();
-    is_splash_shown = true;
-    $('.splash').show();
   }
 
   function onYoutubeReady() {
@@ -294,20 +404,48 @@ var Haiku = function(_player_id) {
       console.log('----------------------------------------');
       // yes we are really ready!
       is_ready = true;
-
-      // let's enable the page controls...
-      // #TODO
-
-      // ...and let's play the first video
+      // let's play the first video
       next();
     }
   }
 
+
+
+  function splash() {
+    if (is_overlay_shown) return;
+    if (is_ready) pause();
+    is_overlay_shown = true;
+    $('.splash').show();
+  }
+
+  function channels() {
+    if (is_overlay_shown) return;
+    if (is_ready) pause();
+    is_overlay_shown = true;
+    $('.channels').show();
+  }
+
+  function chooseChannel(category, timeframe) {
+    settings.channel.category = category;
+    settings.channel.timeframe = timeframe || '';
+    setting('channel', settings.channel);
+    renderChannel();
+    loadReddit();
+    hideOverlay();
+  }
+
+  function hideOverlay() {
+    is_overlay_shown = false;
+    $('.overlay').hide();
+  }
+
+
   function makeTags(tags) {
     var output = '';
+    var tag;
     if (!tags) return '';
     for (var index in tags) {
-      tag = tags[index].replace('[', '').replace(']', '').toLowerCase();
+      tag = tags[index];
       output += ' <span class="' + tag + '">' + tag.toUpperCase() + '</span>';
     }
     return output;
@@ -339,7 +477,7 @@ var Haiku = function(_player_id) {
     if (post.videoStart) options.startSeconds = post.videoStart;
     if (post.videoEnd) options.endSeconds = post.videoEnd;
 
-    if (is_splash_shown || (is_mobile && is_first_play)) {
+    if (is_overlay_shown || (is_mobile && is_first_play)) {
       player.cueVideoById(options);
     } else {
       player.loadVideoById(options);
@@ -398,9 +536,8 @@ var Haiku = function(_player_id) {
   }
 
   function play() {
-    if (is_splash_shown) {
-      is_splash_shown = false;
-      $('.splash').hide();
+    if (is_overlay_shown) {
+      hideOverlay();
     }
     player_state = player.getPlayerState();
     if (player_state == YT.PlayerState.PAUSED || player_state == YT.PlayerState.CUED) {
@@ -410,6 +547,7 @@ var Haiku = function(_player_id) {
   }
 
   function pause() {
+    if (!has_started) return;
     player_state = player.getPlayerState();
     if (player_state == YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -417,10 +555,14 @@ var Haiku = function(_player_id) {
     }
   }
 
+  function stop() {
+    is_ready = false;
+    pause();
+  }
+
   function playPause() {
     if (!has_started) return;
     player_state = player.getPlayerState();
-    console.log(player_state);
     if (player_state == YT.PlayerState.PAUSED || player_state == YT.PlayerState.CUED) { //paused
       play();
     } else {
@@ -456,5 +598,8 @@ var Haiku = function(_player_id) {
     splash: splash,
     onWindowBlur: onWindowBlur,
     onYoutubeReady: onYoutubeReady,
+    channels: channels,
+    chooseChannel: chooseChannel,
+    toggleTag: toggleTag,
   };
 };

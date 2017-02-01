@@ -68,6 +68,11 @@ gulp dist
 - [x] Stop next/prev when reach end/start
 - [x] Better console.logs (with ascii banner!)
 - [x] info splash only first time (or when press H)
+- [x] channel
+
+  - [x] choose/change channel (reset posts)
+  - [x] choose what tags you want in the channel (haiku, poetry, meme and nsfw)
+  - [x] save settings in cookies
 
 ## Bugfixes
 
@@ -77,13 +82,8 @@ gulp dist
 
 ## TODO
 
-- [ ] batches by 25 videos per time with filters (or until you got at least 20 valid videos)
-- [ ] load more videos on the fly when the batch is 5 videos away to the end
-
-- [ ] choose/change channel (reset posts)
-
-  - [ ] top in categories [all/day/...]
-  - [ ] order by [hot/top...]
-  - [ ] only haiku/meme/poetry
-  
 - [ ] better splash introduction (what is haiku, poetry, meme and how youtubehaiku was born)
+
+- [ ] videos forever
+  - [ ] batches by 25 videos per time with filters (or until you got at least 20 valid videos)
+  - [ ] load more videos on the fly when the batch is 5 videos away to the end
