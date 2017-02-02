@@ -1,6 +1,8 @@
 $(function() {
 
-  // Handle page visibility
+  // * Detect when the current window/tab get or lose focus in the browser
+  // source: http://stackoverflow.com/questions/16529860/stop-animation-on-window-blur
+
   var hidden = "hidden";
 
   // Standards:
@@ -46,6 +48,5 @@ $(function() {
     onchange({
       type: document[hidden] ? "blur" : "focus"
     });
-
 
 });

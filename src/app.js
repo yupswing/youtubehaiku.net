@@ -1,16 +1,20 @@
 /*
-Youtube Haiku Player 0.2.0
+Youtube Haiku Player 1.0.0
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 */
 
-var haiku = null; // our player
-var onYouTubeIframeAPIReady = null; // this is called when youtubeiframeapi is ready
-var onWindowBlur = null;
+var haiku = null;                   // the youtubehaiku.net player
+var onYouTubeIframeAPIReady = null; // called when YouTube iFrame API is loaded
+var onWindowBlur = null;            // called when the window lose focus
+
 $(function() {
+  // create the instance
   haiku = new Haiku('youtube');
+  // hook the events
   onYouTubeIframeAPIReady = haiku.onYoutubeReady;
   onWindowBlur = haiku.onWindowBlur;
+  // rock'n'roll
   haiku.init();
 });

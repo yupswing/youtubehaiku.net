@@ -1,5 +1,5 @@
 <!--
-Youtube Haiku Player 0.2.0
+Youtube Haiku Player 1.0.0
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -85,7 +85,7 @@ Licence: MIT
         <p style="text-align:center;">...then choose what channel you want to watch</p>
         <div class="buttons">
           <div>
-            <a class="button" onclick="haiku.chooseChannel('hot')">
+            <a class="button" onclick="haiku.playChannel('hot')">
               <span id="channel-hot-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -93,7 +93,7 @@ Licence: MIT
                 Hot
               </span>
             </a>
-            <a class="button" onclick="haiku.chooseChannel('new')">
+            <a class="button" onclick="haiku.playChannel('new')">
               <span id="channel-new-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -103,7 +103,7 @@ Licence: MIT
             </a>
           </div>
           <div>
-            <a class="button" onclick="haiku.chooseChannel('rising')">
+            <a class="button" onclick="haiku.playChannel('rising')">
               <span id="channel-rising-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -112,7 +112,7 @@ Licence: MIT
               </span>
 
             </a>
-            <a class="button" onclick="haiku.chooseChannel('top','day')">
+            <a class="button" onclick="haiku.playChannel('top','day')">
               <span id="channel-top-day" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -122,7 +122,7 @@ Licence: MIT
             </a>
           </div>
           <div>
-            <a class="button" onclick="haiku.chooseChannel('top','week')">
+            <a class="button" onclick="haiku.playChannel('top','week')">
               <span id="channel-top-week" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -132,7 +132,7 @@ Licence: MIT
               </span>
 
             </a>
-            <a class="button" onclick="haiku.chooseChannel('top','month')">
+            <a class="button" onclick="haiku.playChannel('top','month')">
               <span id="channel-top-month" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -144,7 +144,7 @@ Licence: MIT
             </a>
           </div>
           <div>
-            <a class="button" onclick="haiku.chooseChannel('top','year')">
+            <a class="button" onclick="haiku.playChannel('top','year')">
               <span id="channel-top-year" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -154,7 +154,7 @@ Licence: MIT
               </span>
 
             </a>
-            <a class="button" onclick="haiku.chooseChannel('top','all')">
+            <a class="button" onclick="haiku.playChannel('top','all')">
               <span id="channel-top-all" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
@@ -168,7 +168,7 @@ Licence: MIT
           <hr>
           <div>
 
-            <a class="button" onclick="haiku.play()">
+            <a class="button" onclick="haiku.playVideo()">
               <span class="back">
                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
               </span>
@@ -209,7 +209,7 @@ Licence: MIT
             github</a>
         </p>
         <div class="buttons">
-          <a class="button" onclick="haiku.play()">
+          <a class="button" onclick="haiku.playVideo()">
             <span style="width:150px;">
               <i class="fa fa-play" aria-hidden="true"></i>
               Play!
@@ -314,7 +314,7 @@ Licence: MIT
     </a>
   </div>
   <div class="next">
-    <a class="title" onclick="haiku.next()">
+    <a class="title" onclick="haiku.nextVideo()">
       <div class="info"><img src="" class="thumbnail" id="next_thumbnail" style="">
         <strong>Coming up:</strong><br>
         <span class="tags" id="next_tags"></span>
@@ -323,25 +323,25 @@ Licence: MIT
     </a>
   </div>
   <div class="buttons">
-    <a class="button" onclick="haiku.splash()">
+    <a class="button" onclick="haiku.showSplash()">
       <i class="fa fa-question" aria-hidden="true"></i>
     </a>
-    <a class="button" onclick="haiku.channels()">
+    <a class="button" onclick="haiku.showChannels()">
       <i class="fa fa-list-ul" aria-hidden="true"></i>
     </a>
     <a class="button" onclick="haiku.openLink()">
       <i class="fa fa-reddit-alien" aria-hidden="true"></i>
     </a>
-    <a id="button_prev" class="button" onclick="haiku.prev()">
+    <a id="button_prev" class="button" onclick="haiku.prevVideo()">
       <i class="fa fa-fast-backward" aria-hidden="true"></i>
     </a>
-    <a id="button_play" class="button" onclick="haiku.playPause()">
+    <a id="button_play" class="button" onclick="haiku.togglePlayback()">
       <i class="fa fa-play" id="play" aria-hidden="true"></i>
     </a>
-    <a id="button_again" class="button" onclick="haiku.again()">
+    <a id="button_repeat" class="button" onclick="haiku.repeatVideo()">
       <i class="fa fa-repeat" aria-hidden="true"></i>
     </a>
-    <a id="button_next" class="button" onclick="haiku.next()">
+    <a id="button_next" class="button" onclick="haiku.nextVideo()">
       <i class="fa fa-fast-forward" aria-hidden="true"></i>
     </a>
   </div>
