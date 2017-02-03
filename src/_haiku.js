@@ -20,6 +20,7 @@ var Haiku = function(_player_id) {
   var URL_NSFW = URL_BASE + 'nsfw.png';
   var URL_END = URL_BASE + 'end.png';
   var URL_404 = URL_BASE + '404.png';
+  var URL_SPOILER = URL_BASE + 'spoiler.png';
 
   // * Youtube iFrame API states (like this to allow more code minimisation)
   var UNSTARTED = -1;
@@ -655,7 +656,8 @@ var Haiku = function(_player_id) {
         // * Extracting other data
         title = post.title.replace(/\[[^\]]+\]/gi, '').trim();
         thumbnail = post.thumbnail;
-        if (thumbnail == 'nsfw') thumbnail = URL_NSFW; // nsfw thumbnail are hidden, we use our own
+        if (thumbnail == 'nsfw') thumbnail = URL_NSFW; // nsfw thumbnail is hidden, we use our own
+        if (thumbnail == 'spoiler') thumbnail = URL_SPOILER; // spoiler thumbnail is hidden, we use our own
         permalink = 'https://www.reddit.com' + post.permalink;
         score = post.score || 0;
         author = 'u/' + post.author;
