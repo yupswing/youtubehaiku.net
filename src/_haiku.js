@@ -80,6 +80,8 @@ var Haiku = function(_player_id) {
   var is_overlay_shown = false;
   // keep track if the volume ui is showing
   var is_ui_showing_volume = false;
+  // timeout to hide volume
+  var timeout_volume = null;
 
   // default options (used if no cookies)
   var default_options = {
@@ -137,12 +139,16 @@ var Haiku = function(_player_id) {
       // console.log('* You are using a DESKTOP browser');
     }
 
-    $('.volume').click(function(e) {
+    function volumeBarHandler(e) {
+      // handle click and drag on desktop (if mouse press 1 when moving, use it to determine the volume)
+      if (!is_mobile && e.which != 1 && e.buttons != 1) return;
+
       var offset = $(this).offset();
-      // var relX = e.pageX - offset.left;
+      // var relX = e.pageX - offset.left; // we don't need X
       var relY = e.pageY - offset.top;
 
-      // it floats between 0 and ~100
+      // in this case the position floats between 0 and ~100
+      // so we can use it directly
       var perc = 100 - relY + 10;
 
       // normalise action (high clicks becomes 100, low clicks become 0)
@@ -152,11 +158,9 @@ var Haiku = function(_player_id) {
       // round volume to closest 10
       perc = parseInt(Math.round(perc / 10) * 10);
 
-      setVolume(perc);
-
-      // hide UI after a bit of time to allow user to see what happened
-      setTimeout(hideVolume, 200);
-    });
+      if (perc != volume) setVolume(perc);
+    }
+    $('.volume').mousemove(volumeBarHandler).click(volumeBarHandler);
 
     // * Options (mainly we store channel filters in cookies)
     loadOptions();
@@ -191,6 +195,9 @@ var Haiku = function(_player_id) {
         case 66: // B
           prevVideo();
           break;
+        case 77: // M
+          volumeToggleMute();
+          break;
         case 187: // +
         case 38: // [up]
           volumeUp();
@@ -218,7 +225,7 @@ var Haiku = function(_player_id) {
         case 72: // H
           showSplash();
           break;
-        // default:
+          // default:
           // console.log('* Pressed key ' + event.which);
       }
     });
@@ -338,8 +345,8 @@ var Haiku = function(_player_id) {
     if (!is_ready || is_buffering) {
       if (!is_ui_showing_buffering) {
         // Show the loading bar buffering effect
-        $('.loadingbar').css('width', '100%');
-        $('.loadingbar').addClass('buffering');
+        $('.progressbar').css('width', '100%');
+        $('.progressbar').addClass('buffering');
         is_ui_showing_buffering = true;
       }
       return;
@@ -348,8 +355,8 @@ var Haiku = function(_player_id) {
     // it was buffering
     if (is_ui_showing_buffering) {
       // Remove the loading bar buffering effect
-      $('.loadingbar').css('width', '0%');
-      $('.loadingbar').removeClass('buffering');
+      $('.progressbar').css('width', '0%');
+      $('.progressbar').removeClass('buffering');
       is_ui_showing_buffering = false;
     }
 
@@ -365,7 +372,7 @@ var Haiku = function(_player_id) {
     if (duration) perc = ((position / duration) * 100).toFixed(2);
 
     // Update the progress bar
-    $('.loadingbar').css('width', perc + '%');
+    $('.progressbar').css('width', perc + '%');
   }
 
   // ======================================================================== //
@@ -505,7 +512,11 @@ var Haiku = function(_player_id) {
 
   function showVolume() {
     is_ui_showing_volume = true;
-    volume = player.getVolume();
+
+    // can't do this, it is always shifted
+    // not a big deal (we set the volume all the time anyway)
+    // volume = player.getVolume();
+
     renderVolume();
     $('.volume').show();
   }
@@ -815,11 +826,16 @@ var Haiku = function(_player_id) {
   // * Interaction
 
   function setVolume(value) {
+    console.log('set');
     if (value < 0) value = 0;
     if (value > 100) value = 100;
     player.setVolume(value);
     volume = value;
-    renderVolume();
+    showVolume();
+
+    // hide UI after a bit of time to allow user to see what happened
+    if (timeout_volume) clearTimeout(timeout_volume);
+    timeout_volume = setTimeout(hideVolume, 2000);
   }
 
   function volumeUp() {
@@ -831,6 +847,12 @@ var Haiku = function(_player_id) {
   function volumeDown() {
     if (volume <= 0) return;
     setVolume(volume - 10);
+    renderButtonHighlight('#button_volume');
+  }
+
+  function volumeToggleMute() {
+    if (volume <= 0) setVolume(100);
+    else setVolume(0);
     renderButtonHighlight('#button_volume');
   }
 
