@@ -1,7 +1,7 @@
 [![youtubehaiku.net](https://img.shields.io/badge/app-youtubehaiku.net-brightgreen.svg)](#) [![Simone Cingano](https://img.shields.io/badge/author-Simone%20Cingano-red.svg)](mailto:me@yupswing.it) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![HTML5](https://img.shields.io/badge/language-HTML5-orange.svg)](https://www.w3.org/TR/html5/)
 
 ```
-Youtube Haiku Player 1.0.0
+Youtube Haiku Player 1.0.1
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -52,7 +52,6 @@ gulp dist
 
 - [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)
 - [ ] filter for LOUD [suggested by /u/LUIGI2323]
-- [ ] volume controls [suggested by /u/JokerDZNx and /u/NiklasSpZ]
 
 ## FUTURE
 
@@ -97,6 +96,7 @@ gulp dist
   - [x] Start the player when you have 3 valid posts in the buffer
   
 - [x] favicon
+- [x] volume controls [suggested by /u/JokerDZNx and /u/NiklasSpZ]
 
 
 ## Bugfixes

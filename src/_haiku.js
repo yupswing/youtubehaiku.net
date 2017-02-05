@@ -1,5 +1,5 @@
 /*
-Youtube Haiku Player 1.0.0
+Youtube Haiku Player 1.0.1
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -61,6 +61,8 @@ var Haiku = function(_player_id) {
   var current = -1;
   // are there any more posts to be loaded?
   var is_channel_finished = false;
+  // the current volume (percentage)
+  var volume = 100;
 
   // last post id from reddit (called 'after', used in the next paginated request)
   var last_retrived_post = null;
@@ -76,6 +78,8 @@ var Haiku = function(_player_id) {
   var is_ui_showing_buffering = false;
   // keep track if the overlay (splash or channel) is shown
   var is_overlay_shown = false;
+  // keep track if the volume ui is showing
+  var is_ui_showing_volume = false;
 
   // default options (used if no cookies)
   var default_options = {
@@ -118,6 +122,7 @@ var Haiku = function(_player_id) {
 
     // * Set the logo image
     $('.logo img').attr('src', URL_LOGO);
+    hideVolume();
 
     // * Branding console.log
     console.log("==================================================================================\n __   __          _         _          _   _       _ _                       _   \n \\ \\ / /__  _   _| |_ _   _| |__   ___| | | | __ _(_) | ___   _   _ __   ___| |_ \n  \\ V / _ \\| | | | __| | | | '_ \\ / _ \\ |_| |/ _` | | |/ / | | | | '_ \\ / _ \\ __|\n   | | (_) | |_| | |_| |_| | |_) |  __/  _  | (_| | |   <| |_| |_| | | |  __/ |_ \n   |_|\\___/ \\__,_|\\__|\\__,_|_.__/ \\___|_| |_|\\__,_|_|_|\\_\\\\__,_(_)_| |_|\\___|\\__|\n==================================================================================\ncrafted by Simone Cingano\n");
@@ -131,6 +136,27 @@ var Haiku = function(_player_id) {
     } else {
       // console.log('* You are using a DESKTOP browser');
     }
+
+    $('.volume').click(function(e) {
+      var offset = $(this).offset();
+      // var relX = e.pageX - offset.left;
+      var relY = e.pageY - offset.top;
+
+      // it floats between 0 and ~100
+      var perc = 100 - relY + 10;
+
+      // normalise action (high clicks becomes 100, low clicks become 0)
+      if (perc > 90) perc = 100;
+      if (perc < 20) perc = 0;
+
+      // round volume to closest 10
+      perc = parseInt(Math.round(perc / 10) * 10);
+
+      setVolume(perc);
+
+      // hide UI after a bit of time to allow user to see what happened
+      setTimeout(hideVolume, 200);
+    });
 
     // * Options (mainly we store channel filters in cookies)
     loadOptions();
@@ -165,7 +191,14 @@ var Haiku = function(_player_id) {
         case 66: // B
           prevVideo();
           break;
+        case 187: // +
+        case 38: // [up]
+          volumeUp();
+          break;
+        case 189: // +
         case 40: // [down]
+          volumeDown();
+          break;
         case 82: // R
           repeatVideo();
           break;
@@ -185,7 +218,7 @@ var Haiku = function(_player_id) {
         case 72: // H
           showSplash();
           break;
-          // default:
+        // default:
           // console.log('* Pressed key ' + event.which);
       }
     });
@@ -412,6 +445,21 @@ var Haiku = function(_player_id) {
     $('#next_thumbnail').attr('src', thumbnail);
   }
 
+  function renderVolume() {
+    // render the button class (off, low, high)
+    var volumeClass = 'up';
+    if (volume <= 0) volumeClass = 'off';
+    if (volume > 0 && volume < 50) volumeClass = 'down';
+    $('#button_volume i')
+      .removeClass('fa-volume-off')
+      .removeClass('fa-volume-down')
+      .removeClass('fa-volume-up')
+      .addClass('fa-volume-' + volumeClass);
+
+    // render the bar
+    $('.volume_bar').css('height', volume + '%');
+  }
+
   // Prepare the HTML for the tags
   function makeTags(tags) {
     var output = '';
@@ -446,6 +494,25 @@ var Haiku = function(_player_id) {
 
   function showChannels() {
     showOverlay('.channels');
+  }
+
+  function toggleVolume() {
+    // show hide the volume UI
+    if (is_ui_showing_volume) hideVolume();
+    else showVolume();
+    renderButtonHighlight('#button_volume');
+  }
+
+  function showVolume() {
+    is_ui_showing_volume = true;
+    volume = player.getVolume();
+    renderVolume();
+    $('.volume').show();
+  }
+
+  function hideVolume() {
+    is_ui_showing_volume = false;
+    $('.volume').hide();
   }
 
   function playChannel(category, timeframe) {
@@ -573,7 +640,7 @@ var Haiku = function(_player_id) {
       last_retrived_post = null;
       is_channel_finished = false;
       // console.log('* Reddit start over');
-    // } else {
+      // } else {
       // console.log('* Reddit continue from "' + last_retrived_post + '"');
     }
 
@@ -740,12 +807,32 @@ var Haiku = function(_player_id) {
 
     }).fail(function(e) {
       is_reddit_loading = false; // keep track of this
-      console.log('* Reddit error: ' + e);
+      console.error('* Reddit error: ' + e);
     });
   }
 
   // ======================================================================== //
   // * Interaction
+
+  function setVolume(value) {
+    if (value < 0) value = 0;
+    if (value > 100) value = 100;
+    player.setVolume(value);
+    volume = value;
+    renderVolume();
+  }
+
+  function volumeUp() {
+    if (volume >= 100) return;
+    setVolume(volume + 10);
+    renderButtonHighlight('#button_volume');
+  }
+
+  function volumeDown() {
+    if (volume <= 0) return;
+    setVolume(volume - 10);
+    renderButtonHighlight('#button_volume');
+  }
 
   function repeatVideo() {
     if (!has_started) return;
@@ -853,6 +940,8 @@ var Haiku = function(_player_id) {
     showChannels: showChannels,
     toggleTag: toggleTag,
     playChannel: playChannel,
+
+    toggleVolume: toggleVolume,
 
   };
 };

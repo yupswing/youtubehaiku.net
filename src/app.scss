@@ -1,5 +1,5 @@
 /*
-Youtube Haiku Player 1.0.0
+Youtube Haiku Player 1.0.1
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -62,6 +62,7 @@ body {
     background: rgba(0,0,0,0.5);
     border-radius: 20px;
     margin: 50px auto;
+    box-sizing: border-box;
 
     .tube {
       display: inline-block;
@@ -227,6 +228,54 @@ body {
     overflow: hidden;
   }
 
+  .volume {
+    background: transparent;
+    width: 100px;
+    height: 120px;
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+
+    .volume_container {
+      right: 10px;
+      border-radius: 20px;
+      background: #333;
+      width: 20px;
+      height: 100px;
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      padding: 5px;
+      cursor: pointer;
+
+      .volume_box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        .volume_space {
+          z-index: 100;
+          border-radius: 10px;
+          background-image: linear-gradient(to left, #eee, #ccc);
+          height: 100%;
+          width: 20px;
+        }
+
+        .volume_bar {
+          z-index: 102;
+          border-radius: 10px;
+          background-color: red;
+          background-image: linear-gradient(to right, #b31217, #e52d27);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 50%;
+          width: 20px;
+        }
+      }
+    }
+  }
+
   .buttons {
     position: absolute;
     z-index: 100;
@@ -234,6 +283,8 @@ body {
     bottom: 51px;
     text-align: right;
     width: 45%;
+    overflow: hidden;
+    white-space: nowrap;
     overflow: hidden;
 
     .button {
@@ -318,7 +369,9 @@ a.title:not(.no-hover):hover {
   cursor: pointer;
   font-size: 18px;
 }
-#title, #next_title {
+
+#next_title,
+#title {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -333,6 +386,16 @@ a.title:not(.no-hover):hover {
     .current {
       width: 90%;
     }
+
+    #button_repeat {
+      display: none;
+    }
+  }
+
+  .overlay .box {
+    max-width: 100%;
+    width: 100%;
+    border: 0;
   }
 }
 
