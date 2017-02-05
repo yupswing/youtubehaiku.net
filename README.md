@@ -51,6 +51,16 @@ gulp dist
 ## TODO
 
 - [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)
+- [ ] filter for LOUD [suggested by /u/LUIGI2323]
+- [ ] volume controls [suggested by /u/JokerDZNx and /u/NiklasSpZ]
+
+## FUTURE
+
+- [ ] app for ios and android (maybe using cordova) [suggested by /u/marsface]
+- [ ] upvote/downvote directly from the player (maube using reddit oauth2) [suggested by /u/ZeppelinCaptain]
+- YoutubeHaiku bank [suggested by /u/watsug]
+  - [ ] a node server that polls reddit to get post IDs (to have more than 1000 videos)
+  - [ ] the client app gets data from node instead of reddit
 
 ## Features
 
