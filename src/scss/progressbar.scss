@@ -1,0 +1,44 @@
+.progressbar_block {
+  position: absolute;
+  bottom: 0;
+  background: transparent;
+  height: 4px;
+  width: 100%;
+  z-index: 200;
+  text-align: right;
+  font-size: 0;
+  overflow: hidden;
+
+  .progressbar {
+    height: 4px;
+    display: inline-block;
+    background: #f42323;
+    background-image: linear-gradient(to bottom, #b31217, #e52d27);
+    transition: width 0.1s ease;
+
+    &.buffering:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      animation: move 2s linear infinite;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-image: linear-gradient( -45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
+      z-index: 100;
+      background-size: 20px 20px;
+      animation: move 2s linear infinite;
+      overflow: hidden;
+    }
+  }
+}
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 20px 20px;
+  }
+}

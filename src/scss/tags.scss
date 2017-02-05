@@ -1,0 +1,48 @@
+
+.tag {
+  border: 1px solid #eee;
+  font-weight: bold;
+  color: #ccc;
+  display: inline-block;
+  font-size: 8px;
+  padding: 1px 3px;
+  border-radius: 5px;
+  background: #333;
+  text-transform: uppercase;
+}
+
+.bg_other {
+  background: #333 !important;
+  color: #eee;
+
+  span.label {
+    color: #eee !important;
+  }
+}
+
+.bg_haiku {
+  background-color: #191CC1 !important; // original #191CC1
+  color: #eee;
+
+  span.label {
+    color: #eee !important;
+  }
+}
+
+.bg_meme {
+  background-color: #A10000 !important; // original #A10000
+  color: #eee;
+
+  span.label {
+    color: #eee !important;
+  }
+}
+
+.bg_poetry {
+  background-color: #EAD00E !important; // original #EAD00E
+  color: #333;
+
+  span.label {
+    color: #333 !important;
+  }
+}

@@ -1,0 +1,164 @@
+.bar {
+  position: absolute;
+  height: 69px;
+  background: #222;
+  width: 100%;
+  bottom: 0;
+  border-top: 2px solid #444;
+
+  .current {
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
+    width: 45%;
+    overflow: hidden;
+  }
+
+  .volume {
+    background: transparent;
+    width: 100px;
+    height: 120px;
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+
+    .volume_container {
+      border-radius: 20px;
+      background: #333;
+      width: 10px;
+      height: 100px;
+      position: absolute;
+      right: 15px;
+      bottom: 0;
+      padding: 5px;
+      cursor: pointer;
+
+      .volume_box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        .volume_space {
+          z-index: 100;
+          border-radius: 10px;
+          background-image: linear-gradient(to left, #eee, #ccc);
+          height: 100%;
+          width: 10px;
+        }
+
+        .volume_bar {
+          z-index: 102;
+          border-radius: 10px;
+          background-color: red;
+          background-image: linear-gradient(to right, #b31217, #e52d27);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 10px;
+        }
+      }
+    }
+  }
+
+  .buttons {
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 51px;
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+
+    .button {
+      display: inline-block;
+      border-radius: 100px;
+      padding: 5px;
+      text-align: center;
+      text-decoration: none;
+      width: 20px;
+      height: 20px;
+      margin: 0 0 0 10px;
+      border-bottom: 1px solid #000;
+      text-shadow: 0 0 3px #000;
+      // border: 1px solid #999;
+      color: #aaa;
+      background-color: #353535;
+      font-size: 18px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.5s ease;
+
+      i {
+        display: inline-block;
+        position: absolute;
+        top: 7px;
+        right: 0;
+        left: 0;
+      }
+
+      &:not(.no-hover):hover {
+        color: white;
+      }
+    }
+  }
+
+  .next {
+    color: #aaa;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 45%;
+    overflow: hidden;
+
+    .thumbnail {
+      background: #000;
+      margin-right: 10px;
+      height: 70px;
+      width: 93px;
+      float: left;
+    }
+  }
+
+  .title {
+    width: 100%;
+    font-size: 14px;
+    overflow: hidden;
+    text-decoration: none;
+
+    .info {
+      color: #ccc;
+      font-size: 12px;
+      margin-top: 2px;
+
+      span {
+        display: inline-block;
+      }
+    }
+  }
+
+  a.title:not(.no-hover):hover {
+    text-decoration: none !important;
+
+    #title {
+      text-decoration: underline !important;
+    }
+  }
+
+  #title {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  #next_title,
+  #title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

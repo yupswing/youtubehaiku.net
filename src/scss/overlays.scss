@@ -1,0 +1,104 @@
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  background: rgba(0,0,0,0.5);
+  overflow-y: auto;
+
+  .box {
+    position: relative;
+    color: #eee;
+    border: 2px solid #999;
+    width: 80%;
+    max-width: 600px;
+    font-size: 14px;
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    margin: 25px auto;
+    box-sizing: border-box;
+
+    .tube {
+      display: inline-block;
+      padding: 2px;
+      background: #e52d27;
+      border-radius: 10px;
+    }
+
+    h1 {
+      display: block;
+      margin: 0;
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .buttons {
+      text-align: center;
+
+      .button {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
+        margin: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+
+        > span:not(.label) {
+          display: inline-block;
+          border-radius: 8px;
+          padding: 3px;
+          width: 30px;
+          text-align: center;
+          background: #e52d27;
+          border-bottom: 3px solid #b31217;
+          float: left;
+          color: #eee;
+          text-shadow: 0 0 5px #b31217;
+
+          &.back {
+            background: #666;
+            border-bottom: 3px solid #444;
+            text-shadow: 0 0 5px #444;
+          }
+
+          &.success {
+            background: #29B31E;
+            border-bottom: 3px solid #1C7914;
+            text-shadow: 0 0 5px #1C7914;
+          }
+
+          &.danger {
+            background: #666;
+            border-bottom: 3px solid #444;
+            text-shadow: 0 0 5px #444;
+          }
+        }
+
+        span.label {
+          cursor: pointer;
+          font-size: 13px;
+          color: #333;
+          display: inline-block;
+          padding: 8px 20px 0;
+          text-align: center;
+          width: 130px;
+        }
+      }
+    }
+
+    .fa.shortcut {
+      font-size: 12px;
+      background-color: #353535;
+      display: inline-block;
+      width: 15px;
+      padding: 2px;
+      border-radius: 13px;
+      text-align: center;
+      color: #eee;
+      border: 1px solid #999;
+    }
+  }
+}

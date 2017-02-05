@@ -1,0 +1,58 @@
+* {
+  // avoid a without href to be highlighted when clicked on mobile
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a,
+a:not(.no-hover):active,
+a:not(.no-hover):focus,
+a:not(.no-hover):hover {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: black;
+  font-family: Lato, sans-serif;
+}
+
+.player {
+  margin: 0;
+  width: 100%;
+  height: calc(100vh - 72px);
+  z-index: 0;
+}
+
+.logo {
+  display: block;
+  text-decoration: none;
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  z-index: 100;
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 7px;
+  font-size: 0;
+  opacity: 0.9;
+  transition: all 0.5s ease;
+
+  &:not(.no-hover):hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  img {
+    width: 86px;
+    height: 26px;
+  }
+}

@@ -8,7 +8,7 @@ Licence: MIT
 ```
 
 **NOTE: Thanks for checking out the source code :)
-If you plan to fork the project I'll advise you to wait a few days (today is the 1st of February) because the code is going to be optimised soon.**
+If you plan to fork the project you should check for the tag #DEPLOY in the source code to customise your instance of youtubehaiku**
 
 # YOUTUBEHAIKU.NET
 
@@ -50,7 +50,6 @@ gulp dist
 
 ## TODO
 
-- [ ] optimise the code (removed unused stuff, refactor, less computation, less styles)
 - [ ] filter for LOUD [suggested by /u/LUIGI2323]
 
 ## FUTURE

@@ -1,0 +1,26 @@
+@media screen and (max-width: 600px) {
+  .bar {
+    .next {
+      display: none;
+    }
+
+    .buttons,
+    .current {
+      width: 90%;
+    }
+
+    #button_repeat {
+      display: none;
+    }
+  }
+
+  .overlay .box {
+    margin: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    max-width: 100%;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+}
