@@ -147,9 +147,9 @@ var Haiku = function(_player_id) {
       // var relX = e.pageX - offset.left; // we don't need X
       var relY = e.pageY - offset.top;
 
-      // in this case the position floats between 0 and ~100
-      // so we can use it directly
-      var perc = 100 - relY + 10;
+      // in this case the position floats between 0 and 150
+      // (100+50 because we want more space to click 100% for mobile)
+      var perc = 100 - (relY - 50);
 
       // normalise action (high clicks becomes 100, low clicks become 0)
       if (perc > 90) perc = 100;
@@ -519,6 +519,10 @@ var Haiku = function(_player_id) {
 
     renderVolume();
     $('.volume').show();
+
+    // hide UI after a bit of time to allow user to see what happened
+    if (timeout_volume) clearTimeout(timeout_volume);
+    timeout_volume = setTimeout(hideVolume, 3000);
   }
 
   function hideVolume() {
@@ -832,10 +836,6 @@ var Haiku = function(_player_id) {
     player.setVolume(value);
     volume = value;
     showVolume();
-
-    // hide UI after a bit of time to allow user to see what happened
-    if (timeout_volume) clearTimeout(timeout_volume);
-    timeout_volume = setTimeout(hideVolume, 2000);
   }
 
   function volumeUp() {

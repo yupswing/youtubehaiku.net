@@ -21,7 +21,7 @@ var gulp = require('gulp'),
     process.stdout.write(msg + '\n');
   };
 
-log('============================ SOLweb GULP ============================');
+log('========================== YouTubeHaiku.net GULP ==========================');
 
 // *****************************************************************************
 
@@ -123,7 +123,7 @@ gulp.task('dist_clean', function(callback) {
 // Copy included assets
 gulp.task('dist_assets', function(callback) {
   return gulp.src(PATHS.src.assets)
-    .pipe(gulp.dest(PATHS.dist))
+    .pipe(gulp.dest(PATHS.dist));
 });
 
 // Pack and move the <!-- builds --> in index.html
