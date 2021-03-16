@@ -1,7 +1,7 @@
 [![youtubehaiku.net](https://img.shields.io/badge/app-youtubehaiku.net-brightgreen.svg)](#) [![Simone Cingano](https://img.shields.io/badge/author-Simone%20Cingano-red.svg)](mailto:me@yupswing.it) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![HTML5](https://img.shields.io/badge/language-HTML5-orange.svg)](https://www.w3.org/TR/html5/)
 
 ```
-Youtube Haiku Player 1.0.1
+Youtube Haiku Player 1.0.2
 Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
@@ -32,19 +32,19 @@ You can fork, edit and distribute the app as you please, **I just kindly ask to 
 
 After cloning the project you have to install the npm libraries: cd to the project root directory and then:
 
-```
-npm install
+```sh
+npm install # or yarn install
 ```
 
 After that, using gulp, you can compile the code, start a watcher (recompile when you change a file) and start a minimal web server with live reload (default at <http://localhost:3000>):
 
-```
+```sh
 gulp
 ```
 
 Otherwise you can just build the project for production: you will find the distibution files in the `dist` folder:
 
-```
+```sh
 gulp dist
 ```
 
