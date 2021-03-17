@@ -4,53 +4,70 @@ Author: Simone Cingano (me@yupswing.it)
 Repository: https://github.com/yupswing/youtubehaiku.net
 Licence: MIT
 -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Youtube Haiku Player</title>
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes" />
 
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/icon.png">
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/icon.png">
-    <meta name="theme-color" content="#333333">
+    <link
+      rel="apple-touch-icon"
+      href="https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/yupswing/youtubehaiku.net/master/assets/icon.png"
+    />
+    <meta name="theme-color" content="#333333" />
 
     <!-- build:app_css app.css -->
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" type="text/css" href="app.css" />
     <!-- endbuild -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
-    <div class="overlay channels" style="display:none;">
+    <div class="overlay channels" style="display: none">
       <div class="box">
-        <h1>You<span class="tube">Tube</span>Haiku.net</h1>
+        <h1>
+          You
+          <span class="tube">Tube</span>
+          Haiku.net
+        </h1>
         <div id="end">
-          <p style="text-align:center;font-size:18px;">You have reached the end of this channel.<br>
-            Don't worry, just choose a different one to keep watching:</p>
-          <hr>
+          <p style="text-align: center; font-size: 18px">
+            You have reached the end of this channel.
+            <br />
+            Don't worry, just choose a different one to keep watching:
+          </p>
+          <hr />
         </div>
-        <p style="text-align:center;">First choose what tags you want in the channel...</p>
+        <p style="text-align: center">
+          First choose what tags you want in the channel...
+        </p>
         <div class="buttons">
           <div>
             <a class="button bg_haiku" onclick="haiku.toggleTag('haiku')">
               <span id="tag-haiku">
                 <i class="fa" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                HAIKU
-              </span>
+              <span class="label">HAIKU</span>
             </a>
             <a class="button bg_poetry" onclick="haiku.toggleTag('poetry')">
               <span id="tag-poetry">
                 <i class="fa" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                POETRY
-              </span>
+              <span class="label">POETRY</span>
             </a>
           </div>
           <div>
@@ -58,39 +75,33 @@ Licence: MIT
               <span id="tag-meme">
                 <i class="fa" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                MEME
-              </span>
+              <span class="label">MEME</span>
             </a>
             <a class="button bg_other" onclick="haiku.toggleTag('nsfw')">
               <span id="tag-nsfw">
                 <i class="fa" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                NSFW
-              </span>
+              <span class="label">NSFW</span>
             </a>
           </div>
         </div>
-        <hr>
-        <p style="text-align:center;">...then choose what channel you want to watch</p>
+        <hr />
+        <p style="text-align: center">
+          ...then choose what channel you want to watch
+        </p>
         <div class="buttons">
           <div>
             <a class="button" onclick="haiku.playChannel('hot')">
               <span id="channel-hot-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Hot
-              </span>
+              <span class="label">Hot</span>
             </a>
             <a class="button" onclick="haiku.playChannel('new')">
               <span id="channel-new-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                New
-              </span>
+              <span class="label">New</span>
             </a>
           </div>
           <div>
@@ -98,17 +109,13 @@ Licence: MIT
               <span id="channel-rising-" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Rising
-              </span>
+              <span class="label">Rising</span>
             </a>
             <a class="button" onclick="haiku.playChannel('top','day')">
               <span id="channel-top-day" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Top of today
-              </span>
+              <span class="label">Top of today</span>
             </a>
           </div>
           <div>
@@ -116,17 +123,13 @@ Licence: MIT
               <span id="channel-top-week" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Top of the week
-              </span>
+              <span class="label">Top of the week</span>
             </a>
             <a class="button" onclick="haiku.playChannel('top','month')">
               <span id="channel-top-month" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Top of the month
-              </span>
+              <span class="label">Top of the month</span>
             </a>
           </div>
           <div>
@@ -134,73 +137,98 @@ Licence: MIT
               <span id="channel-top-year" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Top of the year
-              </span>
+              <span class="label">Top of the year</span>
             </a>
             <a class="button" onclick="haiku.playChannel('top','all')">
               <span id="channel-top-all" class="channel">
                 <i class="fa fa-play" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Top of all time
-              </span>
+              <span class="label">Top of all time</span>
             </a>
           </div>
-          <hr>
+          <hr />
           <div>
             <a class="button" onclick="haiku.playVideo()">
               <span class="back">
                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
               </span>
-              <span class="label">
-                Nope, keep playin'
-              </span>
+              <span class="label">Nope, keep playin'</span>
             </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="overlay splash" style="display:none;">
+    <div class="overlay splash" style="display: none">
       <div class="box">
-        <h1>You<span class="tube">Tube</span>Haiku.net</h1>
-        <p style="text-align:justify;">Enjoy the videos posted by the users of the subreddit
-          <a style="font-weight:bold;" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
+        <h1>
+          You
+          <span class="tube">Tube</span>
+          Haiku.net
+        </h1>
+        <p style="text-align: justify">
+          Enjoy the videos posted by the users of the subreddit
+          <a
+            style="font-weight: bold"
+            onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')"
+          >
             <i class="fa fa-reddit-alien"></i>
-            r/youtubehaiku</a>
-          in a nice modern player that will make you waste even more time than usual.</p>
-        <p style="text-align:justify;">
+            r/youtubehaiku
+          </a>
+          in a nice modern player that will make you waste even more time than
+          usual.
+        </p>
+        <p style="text-align: justify">
           You just need to know that
           <span class="tag bg_haiku">HAIKU</span>
           are poetic videos under 14 seconds,
           <span class="tag bg_poetry">POETRY</span>
-          are still poetic but longer (under 30 seconds) and then, you know, there are
-          <span class="tag bg_meme">Memes</span>.</p>
-        <p style="font-size:110%;text-align:center;">youtubehaiku.net is made by
-          <a href="http://simonecingano.it" style="font-weight:bold;" target="_blank">Simone Cingano</a>
-          (aka u/yupswing).<br>
+          are still poetic but longer (under 30 seconds) and then, you know,
+          there are
+          <span class="tag bg_meme">Memes</span>
+          .
+        </p>
+        <p style="font-size: 110%; text-align: center">
+          youtubehaiku.net is made by
+          <a
+            href="http://simonecingano.it"
+            style="font-weight: bold"
+            target="_blank"
+          >
+            Simone Cingano
+          </a>
+          (aka u/yupswing).
+          <br />
           The project is
           <em>open source</em>
           and you can fork the code on
-          <a style="font-weight:bold;" href="https://github.com/yupswing/youtubehaiku.net" target="_blank">
+          <a
+            style="font-weight: bold"
+            href="https://github.com/yupswing/youtubehaiku.net"
+            target="_blank"
+          >
             <i class="fa fa-github"></i>
-            github</a>
+            github
+          </a>
         </p>
         <div class="buttons">
           <a class="button" onclick="haiku.playVideo()">
-            <span style="width:150px;">
+            <span style="width: 150px">
               <i class="fa fa-play" aria-hidden="true"></i>
               Play!
             </span>
           </a>
         </div>
-        <p style="font-size:110%;text-align:center;">
+        <p style="font-size: 110%; text-align: center">
           If you have comments or ideas
-          <a href="mailto:me@yupswing.it" target="_blank">contact me</a>.
+          <a href="mailto:me@yupswing.it" target="_blank">contact me</a>
+          .
         </p>
-        <hr>
-        <p>Control the player with the buttons<span class="no_mobile">
-            or use the keyboard shortcuts</span>:</p>
+        <hr />
+        <p>
+          Control the player with the buttons
+          <span class="no_mobile">or use the keyboard shortcuts</span>
+          :
+        </p>
         <ul>
           <li>
             <strong>Double click/tap on the video to toggle fullscreen</strong>
@@ -213,7 +241,8 @@ Licence: MIT
               or
               <kbd>.</kbd>
             </span>
-            to open the channel selection</li>
+            to open the channel selection
+          </li>
           <li>
             <i class="shortcut fa fa-reddit-alien"></i>
             <span class="no_mobile">
@@ -222,7 +251,8 @@ Licence: MIT
               or
               <kbd>L</kbd>
             </span>
-            to open the reddit post</li>
+            to open the reddit post
+          </li>
           <li>
             <i class="shortcut fa fa-fast-forward"></i>
             <span class="no_mobile">
@@ -231,7 +261,8 @@ Licence: MIT
               or
               <kbd>N</kbd>
             </span>
-            to skip to the next video</li>
+            to skip to the next video
+          </li>
           <li>
             <i class="shortcut fa fa-play"></i>
             <span class="no_mobile">
@@ -240,14 +271,16 @@ Licence: MIT
               or
               <kbd>SPACE</kbd>
             </span>
-            to play/pause</li>
+            to play/pause
+          </li>
           <li>
             <i class="shortcut fa fa-repeat"></i>
             <span class="no_mobile">
               or
               <kbd>R</kbd>
             </span>
-            to replay the current video</li>
+            to replay the current video
+          </li>
           <li>
             <i class="shortcut fa fa-fast-backward"></i>
             <span class="no_mobile">
@@ -256,7 +289,8 @@ Licence: MIT
               or
               <kbd>B</kbd>
             </span>
-            to go back to the previous video</li>
+            to go back to the previous video
+          </li>
           <li>
             <i class="shortcut fa fa-volume-up"></i>
             <span class="no_mobile">
@@ -267,14 +301,16 @@ Licence: MIT
               or
               <kbd>M</kbd>
             </span>
-            to change the volume</li>
+            to change the volume
+          </li>
           <li>
             <i class="shortcut fa fa-repeat"></i>
             <span class="no_mobile">
               or
               <kbd>R</kbd>
             </span>
-            to replay the current video</li>
+            to replay the current video
+          </li>
           <li>
             <i class="shortcut fa fa-question"></i>
             <span class="no_mobile">
@@ -283,15 +319,19 @@ Licence: MIT
               or
               <kbd>.</kbd>
             </span>
-            to show this help box again</li>
+            to show this help box again
+          </li>
         </ul>
       </div>
     </div>
     <div class="player">
       <div id="youtube"></div>
     </div>
-    <a class="logo" onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')">
-      <img src="" alt="youtubehaiku.net logo">
+    <a
+      class="logo"
+      onclick="haiku.openLink('http://www.reddit.com/r/youtubehaiku')"
+    >
+      <img src="" alt="youtubehaiku.net logo" />
     </a>
     <div class="progressbar_block">
       <div class="progressbar buffering"></div>
@@ -312,8 +352,16 @@ Licence: MIT
       </div>
       <div class="next">
         <a class="title" onclick="haiku.nextVideo()">
-          <div class="info"><img src="" class="thumbnail" id="next_thumbnail" style="" alt="Thumbnail">
-            <strong>Coming up:</strong><br>
+          <div class="info">
+            <img
+              src=""
+              class="thumbnail"
+              id="next_thumbnail"
+              style=""
+              alt="Thumbnail"
+            />
+            <strong>Coming up:</strong>
+            <br />
             <span class="tags" id="next_tags"></span>
           </div>
           <div id="next_title"></div>
@@ -355,31 +403,45 @@ Licence: MIT
       </div>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"
+    ></script>
     <!-- build:app_js app.js -->
     <script type="text/javascript" src="app.js"></script>
     <!-- endbuild -->
     <!-- Here's google analytics tracking code #DEPLOY
      IF YOU ARE FORKING PLEASE REMOVE OR SUBSTITUTE THE CODE WITH YOUR OWN :) -->
     <script type="text/javascript">
-      (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-          (i[r].q = i[r].q || []).push(arguments)
-        },
-        i[r].l = 1 * new Date();
-        a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
         a.async = 1;
         a.src = g;
-        m.parentNode.insertBefore(a, m)
-      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-      ga('create', 'UA-91208281-1', 'auto');
-      ga('send', 'pageview');
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+      ga("create", "UA-91208281-1", "auto");
+      ga("send", "pageview");
     </script>
-
   </body>
-
 </html>

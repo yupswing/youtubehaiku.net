@@ -1,5 +1,4 @@
-$(function() {
-
+$(function () {
   // * Detect when the current window/tab get or lose focus in the browser
   // source: http://stackoverflow.com/questions/16529860/stop-animation-on-window-blur
 
@@ -30,23 +29,20 @@ $(function() {
         pageshow: v,
         blur: h,
         focusout: h,
-        pagehide: h
+        pagehide: h,
       };
 
     evt = evt || window.event;
-    if (evt.type in evtMap)
-      status = evtMap[evt.type];
-    else
-      status = this[hidden] ? "hidden" : "visible";
-    window.isWindowFocused = status == 'visible';
-    if (status == 'hidden' && window.onWindowBlur) window.onWindowBlur();
-    if (status == 'visible' && window.onWindowFocus) window.onWindowFocus();
+    if (evt.type in evtMap) status = evtMap[evt.type];
+    else status = this[hidden] ? "hidden" : "visible";
+    window.isWindowFocused = status == "visible";
+    if (status == "hidden" && window.onWindowBlur) window.onWindowBlur();
+    if (status == "visible" && window.onWindowFocus) window.onWindowFocus();
   }
 
   // set the initial state (but only if browser supports the Page Visibility API)
   if (document[hidden] !== undefined)
     onchange({
-      type: document[hidden] ? "blur" : "focus"
+      type: document[hidden] ? "blur" : "focus",
     });
-
 });
